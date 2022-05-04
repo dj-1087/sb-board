@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<body xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app}">
+<div layout:fragment="content" class="main-content">
+    <h1>Sign Up</h1> <hr>
+    <form id="signup-form" th:action="@{/}" method="POST" th:object="${null}" >
+        <label>
+            닉네임
+            <input type="text" />
+        </label>
+        <label>
+            이메일
+            <input type="text" />
+        </label>
+        <label>
+            비밀번호
+            <input type="text" />
+        </label>
+
+        <button type="submit">회원가입</button>
+    </form>
+
+    <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+    <script type="application/javascript" >
+        $(document).ready(function() {
+            console.log("ready sign up")
+        });
+    </script>
+</div>
+</body>
