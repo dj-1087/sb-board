@@ -3,6 +3,7 @@ spring:
     name: sb-board
 
   profiles:
+    active: @spring.profiles.active@
     group:
       dev: dev
       test: test
