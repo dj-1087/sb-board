@@ -1,6 +1,7 @@
 package kr.co.promptech.sbboard.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,7 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers( "/css/**", "/extension/**", "/fonts/**", "/icons/**", "/images/**", "/js/**", "/node_modules/**", "/sass/**");
+        web.ignoring().antMatchers(  "/node_modules/**", "/sass/**").requestMatchers(PathRequest.toStaticResources().atCommonLocations());;
     }
 
     @Override

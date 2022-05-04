@@ -34,3 +34,7 @@ build/
 
 ### configuration ###
 /src/main/resources/application-*.yml
+
+### front-end resources ###
+/src/main/resources/static/node/
+/src/main/resources/static/node_modules/

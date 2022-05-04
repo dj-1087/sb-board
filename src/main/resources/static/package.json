@@ -1,0 +1,15 @@
+{
+  "name": "sb-board-front",
+  "version": "1.0.0",
+  "description": "sb-board front-end resources",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dj.jeong",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.1.3",
+    "jquery": "^3.6.0"
+  }
+}
