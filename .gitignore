@@ -32,9 +32,16 @@ build/
 ### VS Code ###
 .vscode/
 
+### DS_Store ###
+*.DS_Store
+
 ### configuration ###
 /src/main/resources/application-*.yml
 
 ### front-end resources ###
 /src/main/resources/static/node/
 /src/main/resources/static/node_modules/
+
+### documentaion ###
+/doc/*.sql
+/doc/*.mwb.bak
