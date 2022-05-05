@@ -3,27 +3,55 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-    <h1>Sign Up</h1> <hr>
-    <form id="signup-form" th:action="@{/}" method="POST" th:object="${null}" >
-        <label>
-            닉네임
-            <input type="text" />
-        </label>
-        <label>
-            이메일
-            <input type="text" />
-        </label>
-        <label>
-            비밀번호
-            <input type="text" />
-        </label>
+    <h1>Sign Up</h1>
+    <hr>
+    <form id="signup-form" action="#" th:action="@{/signup}" method="POST" th:object="${accountDto}">
+        <div class="mb-3">
+            <label for="nickname">닉네임</label>
+            <input id="nickname" type="text" th:field="*{nickname}" class="form-control"
+                   placeholder="별명을 입력해주세요" aria-describedby="nickname-help" required minlength="3" maxlength="20" />
+            <small id="nickname-help" th:unless="${#fields.hasErrors('nickname')}" class="form-text text-muted">
+                공백없이 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
+            </small>
+            <small class="invalid-feedback">닉네임을 입력하세요.</small>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}">잘못된 형식입니다.</small>
+        </div>
 
-        <button type="submit">회원가입</button>
+        <div class="mb-3">
+            <label for="email">이메일</label>
+            <input id="email" type="email" th:field="*{email}" class="form-control"
+                                              placeholder="mail@example.com" aria-describedby="email-help" required>
+            <small id="email-help" class="form-text text-muted">
+                공백없이 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
+            </small>
+            <small class="invalid-feedback">수신가능한 이메일을 입력하세요.</small>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">잘못된 이메일 주소입니다.</small>
+        </div>
+        <div class="mb-3">
+            <label for="password">비밀번호</label>
+            <input id="password" type="password" th:field="*{password}" autocomplete="on"
+                   class="form-control" aria-describedby="password-help" required minlength="8" maxlength="20">
+            <small id="password-help" class="form-text text-muted">
+                영문, 숫자, 특수문자 모두 조합하여 8~20자리 이상으로 비밀번호를 설정해주세요.
+            </small>
+            <small class="invalid-feedback">비밀번호를 입력하세요.</small>
+            <small class="form-text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">>잘못된 비밀번호 형식입니다.</small>
+        </div>
+        <div class="mb-3">
+            <label for="password-check" >비밀번호 확인</label>
+            <input id="password-check" type="password" autocomplete="off"
+                   class="form-control" aria-describedby="password-check-help" required minlength="8" maxlength="20">
+            <small id="password-check-help" class="form-text text-muted">
+                같은 비밀번호를 다시 한 번 입력 바랍니다.
+            </small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
 
     <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
-    <script type="application/javascript" >
-        $(document).ready(function() {
+    <script type="application/javascript">
+        $(document).ready(function () {
             console.log("ready sign up")
         });
     </script>
