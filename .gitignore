@@ -45,3 +45,7 @@ build/
 ### documentaion ###
 /doc/*.sql
 /doc/*.mwb.bak
+
+### compiled files ###
+/src/main/resources/static/css/app.css
+/src/main/resources/static/css/app.css.map
