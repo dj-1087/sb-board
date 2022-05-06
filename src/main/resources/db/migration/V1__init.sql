@@ -2,13 +2,13 @@
 -- Table `accounts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `accounts` (
-                                          `id` BIGINT NOT NULL,
+                                          `id` BIGINT NOT NULL AUTO_INCREMENT,
                                           `email` VARCHAR(100) NOT NULL,
                                           `nickname` VARCHAR(45) NULL,
                                           `password` VARCHAR(255) NOT NULL,
-                                          `emailConfirmed` TINYINT NOT NULL,
-                                          `emailConfirmToken` VARCHAR(255) NULL,
-                                          `accountType` VARCHAR(45) NOT NULL,
+                                          `email_confirmed` BIT NOT NULL DEFAULT FALSE,
+                                          `email_confirmToken` VARCHAR(255) NULL,
+                                          `account_type` VARCHAR(45) NOT NULL,
                                           `created_at` TIMESTAMP DEFAULT now(),
                                           `updated_at` TIMESTAMP DEFAULT now(),
                                           PRIMARY KEY (`id`),
