@@ -9,13 +9,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 
 @Slf4j
 @Controller
@@ -28,6 +34,14 @@ public class AccountController {
     private final AccountValidator accountValidator;
 
     private final ModelMapper modelMapper;
+
+    private final JavaMailSender mailSender;
+
+    @Value("${app.url}")
+    private String APPLICATION_URL;
+
+    @Value("${spring.mail.username}")
+    private String EMAIL_SENDER_ADDRESS;
 
     @InitBinder("accountValidator")
     public void initBinder(WebDataBinder webDataBinder) {
@@ -57,6 +71,23 @@ public class AccountController {
         log.info("accountType=" + account.getAccountType());
         Account savedAccount = accountService.save(account);
 
+        MimeMessage mailMessage = mailSender.createMimeMessage();
+        try {
+            mailMessage.setSubject("[Spring Boot 게시판] 회원가입 메일 인증");
+            String link = APPLICATION_URL + "/auth/email-token?email=" + account.getEmail() +
+                    "&token=" + account.getEmailConfirmToken();
+            String mailContent = "<h3>아래 링크를 통해 메일 인증을 완료해주세요</h3>\n" +
+                    "<a href='" + link + "'>" + link + "</a>";
+            mailMessage.setText(mailContent, "UTF-8", "html");
+
+            mailMessage.setFrom(EMAIL_SENDER_ADDRESS);
+            mailMessage.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(account.getEmail(), account.getNickname(), "UTF-8"));
+
+            mailSender.send(mailMessage);
+        } catch (MessagingException | UnsupportedEncodingException exception) {
+            model.addAttribute("error", "메일 전송 에러");
+            return "/app/auth/sign-up";
+        }
 
         return "redirect:/";
     }
