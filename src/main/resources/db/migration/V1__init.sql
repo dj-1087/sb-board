@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
                                           `nickname` VARCHAR(45) NULL,
                                           `password` VARCHAR(255) NOT NULL,
                                           `email_confirmed` BIT NOT NULL DEFAULT FALSE,
-                                          `email_confirmToken` VARCHAR(255) NULL,
+                                          `email_confirm_token` VARCHAR(255) NULL,
                                           `account_type` VARCHAR(45) NOT NULL,
                                           `created_at` TIMESTAMP DEFAULT now(),
                                           `updated_at` TIMESTAMP DEFAULT now(),
