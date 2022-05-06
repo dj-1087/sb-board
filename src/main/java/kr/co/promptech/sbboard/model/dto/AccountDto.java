@@ -26,7 +26,4 @@ public class AccountDto {
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\W)(?=\\S+$).{8,20}",
             message = "영문 대,소문자와 숫자, 특수문자 모두 조합하여 8~20자리 이상으로 비밀번호를 설정해주세요.")
     private String password;
-
-    // TODO: 추후 Enum으로 수정
-    private String accountType;
 }

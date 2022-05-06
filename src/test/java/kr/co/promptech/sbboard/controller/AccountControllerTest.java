@@ -21,6 +21,9 @@ class AccountControllerTest {
     @Test
     @DisplayName("회원가입 화면 표시 테스트")
     void signUpView() throws Exception {
-        mockMvc.perform(get("/auth/sign-up")).andExpect(status().isOk()).andExpect(view().name("app/auth/signUp"));
+        mockMvc.perform(get("/auth/sign-up"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("/app/auth/sign-up"))
+                .andExpect(model().attributeExists("accountDto"));
     }
 }

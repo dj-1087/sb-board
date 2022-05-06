@@ -5,7 +5,9 @@
 <div layout:fragment="content" class="main-content">
     <h1>Sign Up</h1>
     <hr>
-    <form id="signup-form" action="#" th:action="@{/signup}" method="POST" th:object="${accountDto}">
+    <form id="signup-form" th:action="@{/auth/account}" method="POST" th:object="${accountDto}"
+        class="needs-validation" novalidate>
+
         <div class="mb-3">
             <label for="nickname">닉네임</label>
             <input id="nickname" type="text" th:field="*{nickname}" class="form-control"
@@ -21,7 +23,7 @@
             <label for="email">이메일</label>
             <input id="email" type="email" th:field="*{email}" class="form-control"
                                               placeholder="mail@example.com" aria-describedby="email-help" required>
-            <small id="email-help" class="form-text text-muted">
+            <small id="email-help" th:unless="${#fields.hasErrors('email')}" class="form-text text-muted">
                 공백없이 3자 이상 20자 이내로 입력하세요. 가입후에 변경할 수 있습니다.
             </small>
             <small class="invalid-feedback">수신가능한 이메일을 입력하세요.</small>
@@ -31,7 +33,7 @@
             <label for="password">비밀번호</label>
             <input id="password" type="password" th:field="*{password}" autocomplete="on"
                    class="form-control" aria-describedby="password-help" required minlength="8" maxlength="20">
-            <small id="password-help" class="form-text text-muted">
+            <small id="password-help" th:unless="${#fields.hasErrors('password')}" class="form-text text-muted">
                 영문, 숫자, 특수문자 모두 조합하여 8~20자리 이상으로 비밀번호를 설정해주세요.
             </small>
             <small class="invalid-feedback">비밀번호를 입력하세요.</small>
@@ -49,11 +51,14 @@
         <button type="submit" class="btn btn-primary">회원가입</button>
     </form>
 
-    <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/js/app/auth/sign-up-manager.js}"></script>
     <script type="application/javascript">
-        $(document).ready(function () {
-            console.log("ready sign up")
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const signUpForm = document.getElementById('signup-form')
+            const signUpManager = new SignUpManager(signUpForm);
         });
+
     </script>
 </div>
 </body>

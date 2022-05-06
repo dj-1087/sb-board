@@ -11,8 +11,8 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: none # db migrate ?
-      #      ddl-auto: validate # default
+#      ddl-auto: none # db migrate ?
+      ddl-auto: validate # default
       naming:
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
@@ -58,4 +58,6 @@ spring:
 logging:
   level:
     org.springframework: DEBUG
-    org.hibernate: DEBUG
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql: trace
