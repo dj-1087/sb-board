@@ -22,6 +22,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.io.UnsupportedEncodingException;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -90,5 +91,25 @@ public class AccountController {
         }
 
         return "redirect:/";
+    }
+
+    @GetMapping("/email-token")
+    public String checkEmailToken(String email, String token, Model model) {
+        Account account = accountService.findByEmail(email);
+        if (account == null) {
+            model.addAttribute("error", "해당 이메일을 가진 회원정보가 없습니다.");
+            return "/app/auth/authenticate";
+        }
+
+        if (!account.getEmailConfirmToken().equals(token)) {
+            model.addAttribute("error", "유효하지 않은 토큰 값입니다.");
+            return "/app/auth/authenticate";
+        }
+
+        account.setEmailConfirmed(true);
+        accountService.save(account);
+        model.addAttribute("error", null);
+        model.addAttribute("nickname", account.getNickname());
+        return "/app/auth/authenticate";
     }
 }

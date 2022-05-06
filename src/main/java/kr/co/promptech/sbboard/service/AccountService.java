@@ -21,6 +21,10 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
+    public Account findByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
+
     public String generateEmailConfirmToken() {
         return UUID.randomUUID().toString();
     }

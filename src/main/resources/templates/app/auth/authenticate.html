@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<body xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app}">
+<div layout:fragment="content" class="main-content"
+     th:object="${error}">
+    <h1>Authenticate Page</h1> <hr>
+    <div class="container text-center">
+        <p class="text-primary" th:unless="${error != null}">
+            <span th:text="${nickname}">익명</span>! 어서오세요. <br />
+            메일 인증이 완료되었습니다.
+        </p>
+        <p class="text-danger" th:if="${error != null}" th:text="${error}"></p>
+    </div>
+</div>
+</body>
