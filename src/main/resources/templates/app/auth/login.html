@@ -24,15 +24,17 @@
             <small class="invalid-feedback">비밀번호를 입력해주세요.</small>
         </div>
 
-        <button type="submit" class="btn btn-primary">로그인</button>
+        <div class="d-flex justify-content-between">
+            <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </div>
     </form>
-
-    <script type="application/javascript">
-
-        document.addEventListener("DOMContentLoaded", () => {
-
-        });
-
-    </script>
 </div>
+<script type="application/javascript" layout:fragment="script">
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+    });
+
+</script>
 </body>
