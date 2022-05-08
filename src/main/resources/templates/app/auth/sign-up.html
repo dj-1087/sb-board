@@ -3,10 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-    <h1>Sign Up</h1>
+    <h1>회원가입</h1>
     <hr>
-    <form id="signup-form" th:action="@{/auth/account}" method="POST" th:object="${accountDto}"
-        class="needs-validation" novalidate>
+    <form id="signup-form" th:action="@{/auth/account}" method="POST" th:object="${accountDto}" novalidate>
 
         <div class="mb-3">
             <label for="nickname">닉네임</label>

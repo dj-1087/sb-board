@@ -1,0 +1,1 @@
+ALTER TABLE accounts CHANGE account_type authorities VARCHAR(45);

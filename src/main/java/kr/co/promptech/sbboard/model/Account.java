@@ -1,10 +1,14 @@
 package kr.co.promptech.sbboard.model;
 
+import kr.co.promptech.sbboard.enums.AccountType;
 import kr.co.promptech.sbboard.model.base.BaseTimeEntity;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.Collection;
 
 @Entity
 @Getter
@@ -31,10 +35,6 @@ public class Account extends BaseTimeEntity {
 
     private String emailConfirmToken;
 
-//    @Enumerated(EnumType.STRING)
-    // TODO: create AccountType enum
-    private String accountType;
-
-
+    private String authorities;
 
 }
