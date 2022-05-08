@@ -32,6 +32,11 @@ public class AccountController {
         webDataBinder.addValidators(accountValidator);
     }
 
+    @GetMapping("/login")
+    public String login() {
+        return "/app/auth/login";
+    }
+
     @GetMapping("/sign-up")
     public String signUpView(Model model) {
         model.addAttribute("accountDto", new AccountDto());

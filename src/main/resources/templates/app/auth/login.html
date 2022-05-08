@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<body xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app}">
+<div layout:fragment="content" class="main-content">
+    <h1>로그인</h1>
+    <hr>
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+        이메일 또는 비밀번호 정보가 올바르지 않습니다.
+    </div>
+    <form id="signup-form" th:action="@{/auth/login}" method="POST">
+
+        <div class="mb-3">
+            <label for="email">이메일</label>
+            <input id="email" type="email" name="username" class="form-control"
+                   placeholder="mail@example.com"  required>
+
+            <small class="invalid-feedback">이메일을 입력해주세요.</small>
+        </div>
+        <div class="mb-3">
+            <label for="password">비밀번호</label>
+            <input id="password" type="password" name="password" autocomplete="on"
+                   class="form-control" required minlength="8" maxlength="20">
+            <small class="invalid-feedback">비밀번호를 입력해주세요.</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+
+    <script type="application/javascript">
+
+        document.addEventListener("DOMContentLoaded", () => {
+
+        });
+
+    </script>
+</div>
+</body>

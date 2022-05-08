@@ -112,4 +112,16 @@ public class AccountService implements UserDetailsService {
         account.setEmailConfirmed(true);
         accountRepository.save(account);
     }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account account = accountRepository.findByEmail(email);
+
+        if (account == null) {
+            throw new UsernameNotFoundException(email);
+        }
+
+        return new AccountAdapter(account);
+    }
+
 }
