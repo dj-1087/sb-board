@@ -1,0 +1,1 @@
+ALTER TABLE posts ADD board_type VARCHAR(45) AFTER content;

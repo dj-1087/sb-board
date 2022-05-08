@@ -1,6 +1,6 @@
 package kr.co.promptech.sbboard.service;
 
-import kr.co.promptech.sbboard.enums.AccountType;
+import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.AccountAdapter;
 import kr.co.promptech.sbboard.model.dto.AccountDto;
@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

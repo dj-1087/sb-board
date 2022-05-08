@@ -1,4 +1,4 @@
-package kr.co.promptech.sbboard.enums;
+package kr.co.promptech.sbboard.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

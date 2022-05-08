@@ -63,28 +63,18 @@ CREATE TABLE IF NOT EXISTS `comments` (
                                           `content` VARCHAR(255) NOT NULL,
                                           `created_at` TIMESTAMP DEFAULT now(),
                                           `updated_at` TIMESTAMP DEFAULT now(),
-                                          `accounts_id` BIGINT NOT NULL,
-                                          `posts_id` BIGINT NOT NULL,
+                                          `account_id` BIGINT NOT NULL,
+                                          `post_id` BIGINT NOT NULL,
                                           PRIMARY KEY (`id`),
-                                          INDEX `fk_comments_accounts1_idx` (`accounts_id` ASC) VISIBLE,
-                                          INDEX `fk_comments_posts1_idx` (`posts_id` ASC) VISIBLE,
+                                          INDEX `fk_comments_accounts1_idx` (`account_id` ASC) VISIBLE,
+                                          INDEX `fk_comments_posts1_idx` (`post_id` ASC) VISIBLE,
                                           CONSTRAINT `fk_comments_accounts1`
-                                              FOREIGN KEY (`accounts_id`)
+                                              FOREIGN KEY (`account_id`)
                                                   REFERENCES `accounts` (`id`)
                                                   ON DELETE NO ACTION
                                                   ON UPDATE NO ACTION,
                                           CONSTRAINT `fk_comments_posts1`
-                                              FOREIGN KEY (`posts_id`)
+                                              FOREIGN KEY (`post_id`)
                                                   REFERENCES `posts` (`id`)
                                                   ON DELETE NO ACTION
                                                   ON UPDATE NO ACTION);
-
-
--- -----------------------------------------------------
--- Table `boards`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `boards` (
-                                        `id` INT NOT NULL,
-                                        `type` VARCHAR(45) NULL,
-                                        `name` VARCHAR(45) NULL,
-                                        PRIMARY KEY (`id`));

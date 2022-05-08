@@ -1,6 +1,6 @@
 package kr.co.promptech.sbboard.controller;
 
-import kr.co.promptech.sbboard.enums.AccountType;
+import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.repository.AccountRepository;
 import kr.co.promptech.sbboard.service.AccountService;
@@ -11,8 +11,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-
-import javax.mail.internet.MimeMessage;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

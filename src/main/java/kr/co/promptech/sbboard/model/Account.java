@@ -1,19 +1,16 @@
 package kr.co.promptech.sbboard.model;
 
-import kr.co.promptech.sbboard.enums.AccountType;
+import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.base.BaseTimeEntity;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Getter
-@Setter
 @Builder
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "accounts")
@@ -22,6 +19,12 @@ public class Account extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToMany(mappedBy = "account")
+    List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account")
+    List<Comment> comments = new ArrayList<>();
 
     @Column(unique = true)
     private String email;
