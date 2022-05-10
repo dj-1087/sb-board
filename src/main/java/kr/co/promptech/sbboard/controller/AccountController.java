@@ -1,9 +1,9 @@
 package kr.co.promptech.sbboard.controller;
 
 import kr.co.promptech.sbboard.model.Account;
-import kr.co.promptech.sbboard.model.dto.AccountDto;
 import kr.co.promptech.sbboard.model.parameter.EmailTokenParameter;
 import kr.co.promptech.sbboard.model.validator.AccountValidator;
+import kr.co.promptech.sbboard.model.vo.AccountVo;
 import kr.co.promptech.sbboard.service.AccountService;
 import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ public class AccountController {
 
     private final AccountValidator accountValidator;
 
-    @InitBinder("accountDto")
+    @InitBinder("accountVo")
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(accountValidator);
     }
@@ -39,12 +39,12 @@ public class AccountController {
 
     @GetMapping("/sign-up")
     public String signUpView(Model model) {
-        model.addAttribute("accountDto", new AccountDto());
+        model.addAttribute("accountVo", new AccountVo());
         return "/app/auth/sign-up";
     }
 
     @PostMapping("/account")
-    public String signUp(@ModelAttribute("accountDto") @Valid AccountDto accountDto,
+    public String signUp(@ModelAttribute("accountVo") @Valid AccountVo accountVo,
                          BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("========has errors========");
@@ -52,7 +52,7 @@ public class AccountController {
         }
 
         // save account
-        Account account = accountService.signUp(accountDto);
+        Account account = accountService.signUp(accountVo);
 
         // send mail
         ResultHandler result = accountService.sendConfirmationMail(account);

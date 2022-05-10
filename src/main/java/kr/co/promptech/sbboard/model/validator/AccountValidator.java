@@ -1,6 +1,6 @@
 package kr.co.promptech.sbboard.model.validator;
 
-import kr.co.promptech.sbboard.model.dto.AccountDto;
+import kr.co.promptech.sbboard.model.vo.AccountVo;
 import kr.co.promptech.sbboard.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -15,17 +15,17 @@ public class AccountValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return clazz.isAssignableFrom(AccountDto.class);
+        return clazz.isAssignableFrom(AccountVo.class);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        AccountDto accountDto = (AccountDto) target;
-        if(accountRepository.existsByNickname(accountDto.getNickname())){
-            errors.rejectValue("nickname", "invalid.Nickname", new Object[]{accountDto.getNickname()}, "이미 사용중인 닉네임입니다.");
+        AccountVo accountVo = (AccountVo) target;
+        if(accountRepository.existsByNickname(accountVo.getNickname())){
+            errors.rejectValue("nickname", "invalid.Nickname", new Object[]{accountVo.getNickname()}, "이미 사용중인 닉네임입니다.");
         }
-        if(accountRepository.existsByEmail(accountDto.getEmail())){
-            errors.rejectValue("email", "invalid.Email", new Object[]{accountDto.getEmail()}, "이미 사용중인 이메일입니다.");
+        if(accountRepository.existsByEmail(accountVo.getEmail())){
+            errors.rejectValue("email", "invalid.Email", new Object[]{accountVo.getEmail()}, "이미 사용중인 이메일입니다.");
         }
     }
 }

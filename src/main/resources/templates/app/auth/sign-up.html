@@ -5,7 +5,7 @@
 <div layout:fragment="content" class="main-content">
     <h1>회원가입</h1>
     <hr>
-    <form id="signup-form" th:action="@{/auth/account}" method="POST" th:object="${accountDto}" novalidate>
+    <form id="signup-form" th:action="@{/auth/account}" method="POST" th:object="${accountVo}" novalidate>
 
         <div class="mb-3">
             <label for="nickname">닉네임</label>

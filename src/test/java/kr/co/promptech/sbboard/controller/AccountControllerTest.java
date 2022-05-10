@@ -40,7 +40,7 @@ class AccountControllerTest {
         mockMvc.perform(get("/auth/sign-up"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/app/auth/sign-up"))
-                .andExpect(model().attributeExists("accountDto"));
+                .andExpect(model().attributeExists("accountVo"));
     }
 
     @Test

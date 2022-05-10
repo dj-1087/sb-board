@@ -3,8 +3,8 @@ package kr.co.promptech.sbboard.service;
 import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.AccountAdapter;
-import kr.co.promptech.sbboard.model.dto.AccountDto;
 import kr.co.promptech.sbboard.model.parameter.EmailTokenParameter;
+import kr.co.promptech.sbboard.model.vo.AccountVo;
 import kr.co.promptech.sbboard.repository.AccountRepository;
 import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
@@ -51,11 +51,11 @@ public class AccountService implements UserDetailsService {
         return UUID.randomUUID().toString();
     }
 
-    public Account signUp(AccountDto accountDto) {
-        String encoded = passwordEncoder.encode(accountDto.getPassword());
-        accountDto.setPassword(encoded);
+    public Account signUp(AccountVo accountVo) {
+        String encoded = passwordEncoder.encode(accountVo.getPassword());
+        accountVo.setPassword(encoded);
 
-        Account account = modelMapper.map(accountDto, Account.class);
+        Account account = modelMapper.map(accountVo, Account.class);
         String token = this.generateEmailConfirmToken();
         account.setEmailConfirmToken(token);
 
