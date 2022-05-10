@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `accounts` (
 -- Table `posts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `posts` (
-                                       `id` BIGINT NOT NULL,
+                                       `id` BIGINT NOT NULL AUTO_INCREMENT,
                                        `title` VARCHAR(255) NOT NULL,
                                        `content` LONGTEXT NULL,
                                        `created_at` TIMESTAMP DEFAULT now(),
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `posts` (
 -- Table `files`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `files` (
-                                       `id` BIGINT NOT NULL,
+                                       `id` BIGINT NOT NULL AUTO_INCREMENT,
                                        `name` VARCHAR(255) NOT NULL,
                                        `path` VARCHAR(255) NOT NULL,
                                        `ext` VARCHAR(45) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `files` (
 -- Table `comments`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `comments` (
-                                          `id` BIGINT NOT NULL,
+                                          `id` BIGINT NOT NULL AUTO_INCREMENT,
                                           `content` VARCHAR(255) NOT NULL,
                                           `created_at` TIMESTAMP DEFAULT now(),
                                           `updated_at` TIMESTAMP DEFAULT now(),
