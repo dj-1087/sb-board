@@ -35,7 +35,7 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
-    @OneToMany(mappedBy = "post")
-    Set<File> files = new HashSet<>();
+    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    File file;
 
 }

@@ -65,7 +65,76 @@
                     }
                 }
             });
+
+            const saveButton = document.querySelector(".save-btn");
+            saveButton.addEventListener("click", upload);
+
         })
+
+        /**
+         * 이미지 파일 업로드
+         */
+        function uploadSummernoteImageFile(file, editor) {
+            const token = $("meta[name='_csrf']").attr("content");
+            const header = $("meta[name='_csrf_header']").attr("content");
+            const data = new FormData();
+            data.append("file", file);
+            $.ajax({
+                data : data,
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                type : "POST",
+                url : "/uploadSummernoteImageFile",
+                contentType : false,
+                processData : false,
+                success : function(data) {
+                    //항상 업로드된 파일의 url이 있어야 한다.
+                    $(editor).summernote('insertImage', data.url);
+
+                    setFileInfo(data);
+                }
+            });
+        }
+
+        function setFileInfo(info) {
+            const nameInput = document.getElementById("fileId");
+            const pathInput = document.getElementById("filePath");
+            const extInput = document.getElementById("fileExt");
+
+            nameInput.value = info.name;
+            pathInput.value = info.path;
+            extInput.value = info.ext;
+        }
+
+        function upload() {
+
+            const token = document.querySelector('meta[name="_csrf"]').content;
+            const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+            const form = document.getElementById("file-form");
+            const data = new FormData(form);
+
+            $.ajax({
+                url: '/files/upload',
+                type: "POST",
+                async: false,
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,
+                data : data,
+                beforeSend : function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+                success: function (result) {
+                    console.log(result)
+                    alert("success")
+                },
+                error: function (e) {
+                    alert("fail")
+                }
+            });
+        }
 
     </script>
 </th:block>

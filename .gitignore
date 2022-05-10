@@ -49,3 +49,6 @@ build/
 ### compiled files ###
 /src/main/resources/static/css/app.css
 /src/main/resources/static/css/app.css.map
+
+### upload ###
+/upload
