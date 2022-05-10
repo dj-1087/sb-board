@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<body xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app}">
+<div layout:fragment="content" class="main-content">
+    <h1 th:text="${post.title}">title</h1>
+    <hr>
+    <p th:utext="${post.content}">content</p>
+    <div th:if="${post.file != null}">
+        <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">
+    </div>
+
+</div>
+<th:block layout:fragment="script">
+
+</th:block>
+</body>

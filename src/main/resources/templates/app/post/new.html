@@ -5,11 +5,40 @@
 <div layout:fragment="content" class="main-content">
     <h1>게시물 작성</h1>
     <hr>
+    <form id="post-form" th:action="@{/post}" method="POST" th:object="${postDto}">
+        <input id="fileId" type="hidden" th:field="*{file.name}">
+        <input id="filePath" type="hidden" th:field="*{file.path}">
+        <input id="fileExt" type="hidden" th:field="*{file.ext}">
 
-    <div id="summernote"></div>
-    <div class="mt-3 text-end">
-        <button type="submit" class="btn btn-outline-success">저장</button>
+        <div class="row mb-3">
+            <label for="title" class="col-sm-1 col-form-label">제목</label>
+            <div class="col-sm-11">
+                <input type="text" class="form-control bg-white" id="title" th:field="*{title}">
+            </div>
+        </div>
+        <div class="row mb-3">
+            <label for="summernote" class="col-sm-1 col-form-label">내용</label>
+            <div class="col-sm-11">
+                <textarea class="form-control bg-white shadow" id="summernote" th:field="*{content}"></textarea>
+            </div>
+        </div>
+    </form>
+
+    <form id="file-form" method="POST" enctype="multipart/form-data" th:action="@{/files}" class="mb-3">
+        <div class="row">
+            <label for="files" class="col-sm-1 col-form-label">첨부 파일</label>
+            <div class="col-sm-11">
+                <input class="form-control bg-white" type="file" id="files" name="files" multiple>
+            </div>
+        </div>
+    </form>
+
+
+    <div class="mt-3 d-flex justify-content-between">
+        <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>
+        <button type="button" class="btn btn-outline-success save-btn">저장</button>
     </div>
+
 
 </div>
 <th:block layout:fragment="script">
@@ -17,9 +46,24 @@
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
             $('#summernote').summernote({
-                placeholder: 'Hello Bootstrap 5',
+                placeholder: '게시물 내용을 입력해주세요.',
                 tabsize: 2,
-                height: 100
+                lang: "ko-KR",
+                height: 300,
+                callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+                    onImageUpload : function(files) {
+                        uploadSummernoteImageFile(files[0],this);
+                    },
+                    onPaste: function (e) {
+                        const clipboardData = e.originalEvent.clipboardData;
+                        if (clipboardData && clipboardData.items && clipboardData.items.length) {
+                            const item = clipboardData.items[0];
+                            if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                                e.preventDefault();
+                            }
+                        }
+                    }
+                }
             });
         })
 
