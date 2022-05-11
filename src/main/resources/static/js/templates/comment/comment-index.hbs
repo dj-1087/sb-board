@@ -1,6 +1,15 @@
 <div id="comment-{{id}}" class="comment card mb-3">
-    <div class="card-header">
+    <div class="card-header d-flex justify-content-between">
         {{nickname}}
+        <span class="dropstart">
+            <span id="comment-option-{{id}}" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+            </span>
+            <ul class="dropdown-menu" aria-labelledby="comment-option-{{id}}" >
+                <li><a class="dropdown-item" href="#">수정</a></li>
+                <li><a class="dropdown-item" href="#">삭제</a></li>
+            </ul>
+        </span>
     </div>
     <div class="card-body">
         <blockquote class="blockquote mb-0">

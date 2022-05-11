@@ -11,6 +11,7 @@ const CommentManager = function () {
     this.commentList = []
 
     this.initEvent();
+    this.loadCommentList().then(() => this.refreshView());
 }
 CommentManager.prototype.initEvent = function () {
     console.log("=======init=======")
@@ -18,7 +19,7 @@ CommentManager.prototype.initEvent = function () {
 
     this.saveButton.onclick = function (event) {
         event.preventDefault();
-        self.saveComment()
+        self.saveComment().then(() => self.refreshView())
     }
 }
 
@@ -48,7 +49,12 @@ CommentManager.prototype.saveComment = async function () {
         body: JSON.stringify(data)
     });
 
-    const comment = await response.json()
+
+    // if (response.error()) {
+    //
+    // }
+
+    const comment = await response.json();
 
     console.log("response data")
     console.log(comment)
@@ -57,8 +63,6 @@ CommentManager.prototype.saveComment = async function () {
     comment.createdAt = self.formatToDate(datetime);
 
     self.commentList.push(comment)
-
-    self.refreshView()
 }
 
 CommentManager.prototype.refreshView = function () {
@@ -70,7 +74,7 @@ CommentManager.prototype.refreshView = function () {
     for (const comment of self.commentList) {
         const commentView = self.commentTemplate({
             id: comment.id,
-            nickname: comment.nickname,
+            nickname: comment.accountNickname,
             content: comment.content,
             createdAt: comment.createdAt
         })
@@ -92,4 +96,23 @@ CommentManager.prototype.formatToDate = function (datetime) {
     console.log(datetime)
     moment.locale('ko');
     return moment(datetime).format("LL");
+};
+
+CommentManager.prototype.loadCommentList = async function () {
+    const self = this;
+
+    const response = await fetch("/comments?postId=" + this.postId, { method: "GET", mode: 'cors' })
+        .catch((error) => {
+            alert(error)
+            return false
+        });
+    const dataList =  await response.json();
+
+    self.commentList = _.map(dataList, (comment) => {
+        comment.createdAt = self.formatToDate(comment.createdAt);
+        return comment
+    });
+    console.log("data loaded")
+    console.log(self.commentList)
+
 };

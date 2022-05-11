@@ -13,6 +13,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,10 @@ public class CommentService {
     private final PostRepository postRepository;
 
     private final ModelMapper modelMapper;
+
+    public List<Comment> findAllByPostId(Long postId) {
+        return commentRepository.findAllByPostId(postId);
+    }
 
     public Comment save(CommentVo commentVo) {
 //        Post post = postRepository.getById(commentVo.getPostId());

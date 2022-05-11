@@ -9,7 +9,7 @@ import java.time.Instant;
 @Getter @Setter
 public class CommentDto {
     private String id;
-    private String nickname;
+    private String accountNickname;
     private String content;
     private Instant createdAt;
 }
