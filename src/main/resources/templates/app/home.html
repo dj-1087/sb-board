@@ -43,11 +43,12 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="post, iter : ${posts}" class="clickable" th:attr="data-post-id=${post.id}">
+                    <tr th:each="post, iter : ${posts}" th:attr="data-post-id=${post.id}"
+                        class="clickable" role="link" style="cursor: pointer">
                         <th scope="row" th:text="${iter.size - iter.index}">1</th>
-                        <td th:text="${post.title}">title</td>
+                        <td th:text="${post.title}" class="text-start">title</td>
                         <td th:text="${post.account.nickname}">nickname</td>
-                        <td th:text="${post.createdAt}">createdAt</td>
+                        <td th:text="${#dates.format(post.createdAt, 'yyyy.MM.dd.')}">createdAt</td>
                     </tr>
                     </tbody>
                 </table>
