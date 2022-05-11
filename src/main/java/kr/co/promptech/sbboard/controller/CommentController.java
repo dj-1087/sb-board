@@ -3,17 +3,17 @@ package kr.co.promptech.sbboard.controller;
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.Comment;
 import kr.co.promptech.sbboard.model.dto.CommentDto;
-import kr.co.promptech.sbboard.model.dto.PostDto;
 import kr.co.promptech.sbboard.model.helper.CurrentUser;
 import kr.co.promptech.sbboard.model.vo.CommentVo;
 import kr.co.promptech.sbboard.service.CommentService;
+import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -56,6 +56,21 @@ public class CommentController {
 
 
         return ResponseEntity.ok().body(commentDto);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody CommentVo commentVo) {
+        ResultHandler result = commentService.update(id, commentVo);
+        if (result.isFailure()) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+        commentService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
 }

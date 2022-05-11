@@ -7,6 +7,7 @@ import kr.co.promptech.sbboard.model.helper.CurrentUser;
 import kr.co.promptech.sbboard.model.vo.CommentVo;
 import kr.co.promptech.sbboard.repository.CommentRepository;
 import kr.co.promptech.sbboard.repository.PostRepository;
+import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -49,5 +50,24 @@ public class CommentService {
         }
 
         return savedComment;
+    }
+
+    public void delete(Long id) {
+        commentRepository.deleteById(id);
+    }
+
+    public ResultHandler update(Long id, CommentVo commentVo) {
+        ResultHandler result = new ResultHandler();
+
+        Comment comment = commentRepository.findById(id).orElseThrow(null);
+        if (comment == null) {
+            result.setFailure(true);
+            result.setErrorMessage("해당 댓글이 없습니다.");
+            return result;
+        }
+
+        comment.setContent(commentVo.getContent());
+        commentRepository.save(comment);
+        return result;
     }
 }

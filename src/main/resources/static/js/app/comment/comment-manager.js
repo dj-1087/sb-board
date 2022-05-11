@@ -5,7 +5,8 @@ const CommentManager = function () {
     this.commentSection = document.getElementById("comment-section");
     this.saveButton = document.querySelector("#comment-form .save-btn")
 
-    this.commentTemplate = Handlebars.getTemplate("comment/comment-index");
+    this.commentShowTemplate = Handlebars.getTemplate("comment/show");
+    this.commentEditTemplate = Handlebars.getTemplate("comment/edit");
 
     this.postId = document.getElementById("post-id").value;
     this.commentList = []
@@ -17,10 +18,11 @@ CommentManager.prototype.initEvent = function () {
     console.log("=======init=======")
     const self = this;
 
-    this.saveButton.onclick = function (event) {
+    self.saveButton.onclick = function (event) {
         event.preventDefault();
         self.saveComment().then(() => self.refreshView())
     }
+
 }
 
 CommentManager.prototype.saveComment = async function () {
@@ -49,11 +51,6 @@ CommentManager.prototype.saveComment = async function () {
         body: JSON.stringify(data)
     });
 
-
-    // if (response.error()) {
-    //
-    // }
-
     const comment = await response.json();
 
     console.log("response data")
@@ -72,7 +69,7 @@ CommentManager.prototype.refreshView = function () {
 
     self.commentSection.innerHTML = "";
     for (const comment of self.commentList) {
-        const commentView = self.commentTemplate({
+        const commentView = self.commentShowTemplate({
             id: comment.id,
             nickname: comment.accountNickname,
             content: comment.content,
@@ -80,6 +77,24 @@ CommentManager.prototype.refreshView = function () {
         })
         self.commentSection.innerHTML += commentView;
     }
+
+    document.querySelectorAll('.remove-comment-btn').forEach((removeButton) => {
+        removeButton.addEventListener('click', async function (event) {
+            event.preventDefault();
+
+            await self.removeComment(this.dataset.id);
+            await self.loadCommentList();
+            await self.refreshView();
+        })
+    });
+
+    document.querySelectorAll('.edit-comment-btn').forEach((editButton) => {
+        editButton.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            self.changeToEditView(this.dataset.id);
+        })
+    });
 };
 
 CommentManager.prototype.getFormObject = function (formElement) {
@@ -116,3 +131,53 @@ CommentManager.prototype.loadCommentList = async function () {
     console.log(self.commentList)
 
 };
+
+CommentManager.prototype.removeComment = function (id) {
+    const self = this;
+
+    return fetch("/comments/" + id, {
+        method: "DELETE",
+        mode: 'cors',
+        headers: {
+            'X-CSRF-TOKEN': self.token,
+        },
+    })
+};
+CommentManager.prototype.editComment = function (id) {
+    const self = this;
+    const form = document.querySelector(`#comment-${id} form`)
+    const data = self.getFormObject(form);
+
+    return fetch("/comments/" + id, {
+        method: "PUT",
+        mode: 'cors',
+        headers: {
+            'X-CSRF-TOKEN': self.token,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+};
+
+CommentManager.prototype.changeToEditView = function (id) {
+    const self = this
+
+    const view = document.querySelector(`#comment-${id} .card-body`)
+    const data = _.find(self.commentList, {'id': id})
+    console.log("edit data")
+    console.log('id> ', id)
+    console.log(data);
+
+    view.innerHTML = self.commentEditTemplate({
+        id: data.id,
+        content: data.content,
+        createdAt: data.createdAt
+    })
+
+    const editButton = document.querySelector(`#comment-${id} .edit-btn`)
+    editButton.addEventListener('click', async function () {
+        await self.editComment(id);
+        await self.loadCommentList();
+        await self.refreshView();
+    })
+}
