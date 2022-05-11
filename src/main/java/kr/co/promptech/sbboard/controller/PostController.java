@@ -26,7 +26,7 @@ public class PostController {
     public String newPost(Model model) {
         model.addAttribute("postDto", new PostDto());
 
-        return "/app/post/new";
+        return "app/post/new";
     }
 
     @GetMapping("/{id}")
@@ -39,7 +39,7 @@ public class PostController {
 
         model.addAttribute(post);
 
-        return "/app/post/show";
+        return "app/post/show";
     }
 
     @PostMapping("")
@@ -48,7 +48,7 @@ public class PostController {
                          BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("========has errors========");
-            return "/app/post/new";
+            return "app/post/new";
         }
 
         postService.save(postDto, account);

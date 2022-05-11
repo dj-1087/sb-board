@@ -34,13 +34,13 @@ public class AccountController {
 
     @GetMapping("/login")
     public String login() {
-        return "/app/auth/login";
+        return "app/auth/login";
     }
 
     @GetMapping("/sign-up")
     public String signUpView(Model model) {
         model.addAttribute("accountVo", new AccountVo());
-        return "/app/auth/sign-up";
+        return "app/auth/sign-up";
     }
 
     @PostMapping("/account")
@@ -48,7 +48,7 @@ public class AccountController {
                          BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             log.info("========has errors========");
-            return "/app/auth/sign-up";
+            return "app/auth/sign-up";
         }
 
         // save account
@@ -58,7 +58,7 @@ public class AccountController {
         ResultHandler result = accountService.sendConfirmationMail(account);
         if (result.isFailure()) {
             model.addAttribute("error", result.getErrorMessage());
-            return "/app/auth/sign-up";
+            return "app/auth/sign-up";
         }
 
         return "redirect:/";
@@ -74,13 +74,13 @@ public class AccountController {
         ResultHandler result = accountService.checkExistence(account, parameter);
         if (result.isFailure()) {
             model.addAttribute("error", result.getErrorMessage());
-            return "/app/auth/authenticate";
+            return "app/auth/authenticate";
         }
 
         accountService.updateEmailConfirmed(account);
 
         model.addAttribute("error", null);
         model.addAttribute("nickname", account.getNickname());
-        return "/app/auth/authenticate";
+        return "app/auth/authenticate";
     }
 }

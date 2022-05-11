@@ -28,6 +28,6 @@ public class HomeController {
 
         List<Post> posts = postService.findAll();
         model.addAttribute("posts", posts);
-        return "/app/home";
+        return "app/home";
     }
 }
