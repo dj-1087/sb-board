@@ -1,9 +1,12 @@
 package kr.co.promptech.sbboard.config;
 
+import kr.co.promptech.sbboard.model.Comment;
 import kr.co.promptech.sbboard.model.Post;
 import kr.co.promptech.sbboard.model.dto.PostDto;
+import kr.co.promptech.sbboard.model.vo.CommentVo;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.NameTokenizers;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +29,11 @@ public class WebConfig implements WebMvcConfigurer {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.createTypeMap(PostDto.class, Post.class).addMappings(mapper -> mapper.skip(Post::setFile));
+        modelMapper.createTypeMap(CommentVo.class, Comment.class).addMappings(mapper -> mapper.skip(Comment::setId));
+
+        modelMapper.getConfiguration()
+                .setDestinationNameTokenizer(NameTokenizers.CAMEL_CASE)
+                .setSourceNameTokenizer(NameTokenizers.CAMEL_CASE);
         return modelMapper;
     }
 

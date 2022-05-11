@@ -3,15 +3,40 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
+    <input id="post-id" type="hidden" th:value="${post.id}">
     <h1 th:text="${post.title}">title</h1>
     <hr>
-    <p th:utext="${post.content}">content</p>
-    <div th:if="${post.file != null}">
-        <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">
+    <div class="px-3 mb-3">
+        <div th:utext="${post.content}">content</div>
+        <div th:if="${post.file != null}">
+            <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">
+        </div>
     </div>
+
+    <h4>comments <span style="color: skyblue">0</span></h4>
+    <hr>
+    <div id="comment-section"></div>
+    <form id="comment-form" class="px-3">
+        <div class="form-floating mb-3">
+            <textarea class="form-control" placeholder="댓글 작성란 입니다" id="comment" name="content" style="height: 100px"></textarea>
+            <label for="comment">댓글 작성란 입니다</label>
+        </div>
+        <div class="text-end">
+            <button class="btn btn-secondary save-btn">등록</button>
+        </div>
+    </form>
 
 </div>
 <th:block layout:fragment="script">
-
+    <script th:src="@{/js/app/comment/comment-manager.js}"></script>
+    <script type="application/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("=======load=======")
+            const commentManager = new CommentManager();
+        })
+        // window.addEventListener('load', () => {
+        //     // const CommentManager = new CommentManager();
+        // })
+    </script>
 </th:block>
 </body>

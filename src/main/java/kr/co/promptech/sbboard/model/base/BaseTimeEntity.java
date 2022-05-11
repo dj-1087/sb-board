@@ -1,6 +1,8 @@
 package kr.co.promptech.sbboard.model.base;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,9 +12,9 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.Instant;
 
-@EntityListeners(AuditingEntityListener.class)
+@Getter @Setter @ToString
 @MappedSuperclass
-@Getter
+@EntityListeners(AuditingEntityListener.class)
 public class BaseTimeEntity {
 
     @CreatedDate

@@ -24,7 +24,7 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     List<Comment> comments = new ArrayList<>();
 
     private String title;
