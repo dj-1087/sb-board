@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers(  "/node_modules/**", "/sass/**").requestMatchers(PathRequest.toStaticResources().atCommonLocations());;
+        web.ignoring().antMatchers("/node/**", "/node_modules/**", "/sass/**").requestMatchers(PathRequest.toStaticResources().atCommonLocations());;
     }
 
     @Override
