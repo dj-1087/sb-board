@@ -4,9 +4,7 @@
 <head th:replace="fragments/head :: head"><title>SB-Board</title></head>
 <body>
     <div id="app">
-        <header id="header">
-            <div th:replace="fragments/nav :: nav"></div>
-        </header>
+        <header id="header" th:replace="fragments/header :: header"></header>
         <div th:replace="fragments/sidebar :: sidebar"></div>
 
         <main id="content-layout" class="container">

@@ -1,0 +1,39 @@
+<header id="header" th:fragment="nav"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        class="p-3 mb-3 bg-dark text-white">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 me-3 text-white text-decoration-none">
+                <img th:src="@{/images/logo.png}" width="100px">
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a th:href="@{/}" class="nav-link px-2 text-secondary">Home</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">공지사항</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">Q&A</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">자유게시판</a></li>
+            </ul>
+
+            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
+                <input type="search" class="form-control form-control-dark me-2" placeholder="게시물 검색..." aria-label="Search">
+                <button type="submit" class="btn btn-warning text-nowrap">검색</button>
+            </form>
+
+            <th:block sec:authorize="isAnonymous()">
+                <div class="text-end">
+                    <a th:href="@{/auth/login}" class="btn btn-outline-light me-2">로그인</a>
+<!--                    <a th:href="@{/auth/sign-up}" class="btn btn-warning">회원가입</a>-->
+                </div>
+            </th:block>
+            <th:block sec:authorize="isAuthenticated()" >
+                <div class="text-end">
+                    <form action="#" th:action="@{/logout}" method="POST" class="inline">
+                        <button type="submit" class="btn btn-outline-light me-2">로그아웃</button>
+                    </form>
+                </div>
+            </th:block>
+        </div>
+    </div>
+</header>

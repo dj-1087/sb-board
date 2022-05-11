@@ -16,25 +16,20 @@
     </div>
 
     <div class="container text-center">
-        <th:block sec:authorize="isAnonymous()" >
-            <div class="row align-items-center mb-5">
+<!--        <th:block sec:authorize="isAnonymous()" >-->
+<!--            <div class="row align-items-center mb-5">-->
+<!--                <div class="col text-end">-->
+<!--                    <a th:href="@{/auth/sign-up}" class="btn btn-outline-primary">회원가입</a>-->
+<!--                </div>-->
+<!--                <div class="col text-start">-->
+<!--                    <a th:href="@{/auth/login}" class="btn btn-outline-success">로그인</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </th:block>-->
+<!--        <th:block sec:authorize="isAuthenticated()" >-->
+            <div class="row text-end mb-3">
                 <div class="col text-end">
-                    <a th:href="@{/auth/sign-up}" class="btn btn-outline-primary">회원가입</a>
-                </div>
-                <div class="col text-start">
-                    <a th:href="@{/auth/login}" class="btn btn-outline-success">로그인</a>
-                </div>
-            </div>
-        </th:block>
-        <th:block sec:authorize="isAuthenticated()" >
-            <div class="row align-items-center mb-5">
-                <div class="col text-end">
-                    <a th:href="@{/posts}" class="btn btn-outline-primary">게시물 작성</a>
-                </div>
-                <div class="col text-start">
-                    <form action="#" th:action="@{/logout}" method="POST" class="inline">
-                        <button type="submit" class="btn btn-outline-secondary">로그아웃</button>
-                    </form>
+                    <a th:href="@{/posts}" class="btn btn-sm btn-outline-success">게시물 작성</a>
                 </div>
             </div>
             <div>
@@ -58,8 +53,25 @@
                 </table>
             </div>
 
-        </th:block>
+<!--        </th:block>-->
     </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <script type="application/javascript" layout:fragment="script">
 

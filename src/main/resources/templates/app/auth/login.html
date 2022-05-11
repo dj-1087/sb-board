@@ -3,38 +3,49 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-    <h1>로그인</h1>
-    <hr>
-    <div th:if="${param.error}" class="alert alert-danger" role="alert">
-        이메일 또는 비밀번호 정보가 올바르지 않습니다.
+    <!--    <h2 class="text-muted">홈 > 로그인</h2>-->
+    <!--    <hr>-->
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5">
+
+                        <h3 class="mb-5 text-center">로그인</h3>
+                        <!--                        <img th:src="@{/images/logo.png}" width="130px" class="mb-5">-->
+
+                        <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                            이메일 또는 비밀번호 정보가 올바르지 않습니다.
+                        </div>
+
+                        <form id="signup-form" th:action="@{/auth/login}" method="POST">
+
+                            <div class="row mb-3">
+                                <label for="email" class="col-sm-3 col-form-label">이메일</label>
+                                <div class="col-sm-9">
+                                    <input id="email" type="email" name="username" class="form-control"
+                                           placeholder="mail@example.com" required>
+                                    <small class="invalid-feedback">이메일을 입력해주세요.</small>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="password" class="col-sm-3 col-form-label">비밀번호</label>
+                                <div class="col-sm-9">
+                                    <input id="password" type="password" name="password" autocomplete="on"
+                                           class="form-control" required minlength="8" maxlength="20">
+                                    <small class="invalid-feedback">비밀번호를 입력해주세요.</small>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <button type="submit" class="btn btn-primary w-100 mb-3">로그인</button>
+                        </form>
+                        <a th:href="@{/auth/sign-up}" class="btn btn-secondary w-100">회원가입</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <form id="signup-form" th:action="@{/auth/login}" method="POST">
-
-        <div class="mb-3">
-            <label for="email">이메일</label>
-            <input id="email" type="email" name="username" class="form-control"
-                   placeholder="mail@example.com"  required>
-
-            <small class="invalid-feedback">이메일을 입력해주세요.</small>
-        </div>
-        <div class="mb-3">
-            <label for="password">비밀번호</label>
-            <input id="password" type="password" name="password" autocomplete="on"
-                   class="form-control" required minlength="8" maxlength="20">
-            <small class="invalid-feedback">비밀번호를 입력해주세요.</small>
-        </div>
-
-        <div class="d-flex justify-content-between">
-            <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>
-            <button type="submit" class="btn btn-primary">로그인</button>
-        </div>
-    </form>
 </div>
-<script type="application/javascript" layout:fragment="script">
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-    });
-
-</script>
 </body>
