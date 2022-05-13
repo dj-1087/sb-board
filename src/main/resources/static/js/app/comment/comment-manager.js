@@ -21,8 +21,14 @@ CommentManager.prototype.initEvent = function () {
     self.saveButton.onclick = function (event) {
         event.preventDefault();
         self.saveComment().then(() => self.refreshView())
+        self.resetForm();
     }
 
+}
+
+CommentManager.prototype.resetForm = function () {
+    const textArea = document.getElementById('comment');
+    textArea.value = "";
 }
 
 CommentManager.prototype.saveComment = async function () {
@@ -81,6 +87,9 @@ CommentManager.prototype.refreshView = function () {
     document.querySelectorAll('.remove-comment-btn').forEach((removeButton) => {
         removeButton.addEventListener('click', async function (event) {
             event.preventDefault();
+            if (!confirm("해당 댓글을 삭제하시겠습니까?")) {
+                return false
+            }
 
             await self.removeComment(this.dataset.id);
             await self.loadCommentList();
