@@ -8,8 +8,21 @@
     <hr>
     <div class="px-3 mb-3">
         <div th:utext="${post.content}">content</div>
-        <div th:if="${post.file != null}">
-            <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">
+<!--        <div th:if="${post.file != null}">-->
+<!--            <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">-->
+<!--        </div>-->
+        <div id="file-div" th:if="${!post.fileSet.isEmpty()}">
+            <div th:each="file : ${post.fileSet}"
+                 class="bg-white shadow py-2 px-1 mb-2 mx-2">
+                <i class="bi bi-folder2-open mx-3"></i>
+                <span th:text="${file.originalName}" class="align-middle" style="font-size: 0.9rem"></span>
+                <a th:href="@{'/files/'+${file.id}}" id="file-download" class="float-end me-3" th:download="${file.originalName}">
+                    <i class="bi bi-download"></i>
+                </a>
+<!--                <a th:href="@{'/upload/'+${post.id}+'/'+${file.name}}" id="file-download" class="float-end me-3" download>-->
+<!--                    <i class="bi bi-download"></i>-->
+<!--                </a>-->
+            </div>
         </div>
     </div>
 

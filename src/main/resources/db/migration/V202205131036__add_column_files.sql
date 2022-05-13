@@ -1,0 +1,1 @@
+ALTER TABLE files ADD original_name VARCHAR(45) AFTER name;

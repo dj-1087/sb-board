@@ -45,7 +45,7 @@ CommentManager.prototype.saveComment = async function () {
         method: "POST",
         mode: 'cors',
         headers: {
-            'X-CSRF-TOKEN': self.token,
+            [self.header]: self.token,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
@@ -139,7 +139,7 @@ CommentManager.prototype.removeComment = function (id) {
         method: "DELETE",
         mode: 'cors',
         headers: {
-            'X-CSRF-TOKEN': self.token,
+            [self.header]: self.token,
         },
     })
 };
@@ -152,7 +152,7 @@ CommentManager.prototype.editComment = function (id) {
         method: "PUT",
         mode: 'cors',
         headers: {
-            'X-CSRF-TOKEN': self.token,
+            [self.header]: self.token,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)

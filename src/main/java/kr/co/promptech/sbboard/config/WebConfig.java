@@ -1,8 +1,6 @@
 package kr.co.promptech.sbboard.config;
 
 import kr.co.promptech.sbboard.model.Comment;
-import kr.co.promptech.sbboard.model.Post;
-import kr.co.promptech.sbboard.model.dto.PostDto;
 import kr.co.promptech.sbboard.model.vo.CommentVo;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.modelmapper.ModelMapper;
@@ -28,7 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
-        modelMapper.createTypeMap(PostDto.class, Post.class).addMappings(mapper -> mapper.skip(Post::setFile));
         modelMapper.createTypeMap(CommentVo.class, Comment.class).addMappings(mapper -> mapper.skip(Comment::setId));
 
         modelMapper.getConfiguration()

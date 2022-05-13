@@ -1,27 +1,29 @@
-package kr.co.promptech.sbboard.model.dto;
+package kr.co.promptech.sbboard.model.vo;
 
 import kr.co.promptech.sbboard.model.File;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostDto {
+public class PostVo {
     @NotBlank(message = "제목은 필수 입력 값입니다.")
     private String title;
 
     @NotBlank(message = "내용은 필수 입력 값입니다.")
     private String content;
 
-    private File file;
+    private List<MultipartFile> files;
 }

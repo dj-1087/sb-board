@@ -35,7 +35,11 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
-    @OneToOne(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    File file;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<File> fileSet = new HashSet<>();
 
+    public void addFile(File file) {
+        file.setPost(this);
+        this.fileSet.add(file);
+    }
 }

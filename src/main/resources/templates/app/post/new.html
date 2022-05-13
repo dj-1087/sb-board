@@ -5,44 +5,58 @@
 <div layout:fragment="content" class="main-content">
     <h1>게시물 작성</h1>
     <hr>
-    <form id="post-form" th:action="@{/post}" method="POST" th:object="${postDto}">
-        <input id="fileId" type="hidden" th:field="*{file.name}">
-        <input id="filePath" type="hidden" th:field="*{file.path}">
-        <input id="fileExt" type="hidden" th:field="*{file.ext}">
+    <form id="post-form" enctype="multipart/form-data" th:action="@{/posts}" method="POST" th:object="${postVo}">
 
         <div class="row mb-3">
-            <label for="title" class="col-sm-1 col-form-label">제목</label>
+            <label for="title" class="col-sm-1 col-form-label text-nowrap">제목</label>
             <div class="col-sm-11">
                 <input type="text" class="form-control bg-white" id="title" th:field="*{title}">
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">제목을 입력해주세요</small>
             </div>
         </div>
         <div class="row mb-3">
-            <label for="summernote" class="col-sm-1 col-form-label">내용</label>
+            <label for="summernote" class="col-sm-1 col-form-label text-nowrap">내용</label>
             <div class="col-sm-11">
                 <textarea class="form-control bg-white shadow" id="summernote" th:field="*{content}"></textarea>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">내용을 입력해주세요</small>
             </div>
         </div>
-    </form>
 
-    <form id="file-form" method="POST" enctype="multipart/form-data" th:action="@{/files}" class="mb-3">
         <div class="row">
-            <label for="files" class="col-sm-1 col-form-label">첨부 파일</label>
+            <label for="files" class="col-sm-1 col-form-label text-nowrap">첨부 파일</label>
             <div class="col-sm-11">
-                <input class="form-control bg-white" type="file" id="files" name="files" multiple>
+                <input class="form-control bg-white" type="file" id="files" th:field="*{files}" multiple>
             </div>
+            <input name="test" type="hidden" value="test">
+        </div>
+
+        <div class="mt-3 d-flex justify-content-between">
+            <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>
+            <button type="submit" class="btn btn-outline-success save-btn">저장</button>
         </div>
     </form>
 
+<!--    <form id="file-form" method="POST" enctype="multipart/form-data" th:action="@{/files}" class="mb-3">-->
+<!--        <div class="row">-->
+<!--            <label for="files" class="col-sm-1 col-form-label text-nowrap">첨부 파일</label>-->
+<!--            <div class="col-sm-11">-->
+<!--                <input class="form-control bg-white" type="file" id="files" name="files" multiple>-->
+<!--            </div>-->
+<!--            <input name="test" type="hidden" value="test">-->
+<!--        </div>-->
+<!--    </form>-->
 
-    <div class="mt-3 d-flex justify-content-between">
-        <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>
-        <button type="button" class="btn btn-outline-success save-btn">저장</button>
-    </div>
+
+<!--    <div class="mt-3 d-flex justify-content-between">-->
+<!--        <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>-->
+<!--        <button type="button" class="btn btn-outline-success save-btn">저장</button>-->
+<!--    </div>-->
 
 
 </div>
 <th:block layout:fragment="script">
     <script th:src="@{/node_modules/summernote/dist/summernote-bs5.js}"></script>
+    <script th:src="@{/js/app/post/post-manager.js}"></script>
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
             $('#summernote').summernote({
@@ -65,10 +79,6 @@
                     }
                 }
             });
-
-            const saveButton = document.querySelector(".save-btn");
-            saveButton.addEventListener("click", upload);
-
         })
 
         /**
@@ -107,34 +117,6 @@
             extInput.value = info.ext;
         }
 
-        function upload() {
-
-            const token = document.querySelector('meta[name="_csrf"]').content;
-            const header = document.querySelector('meta[name="_csrf_header"]').content;
-
-            const form = document.getElementById("file-form");
-            const data = new FormData(form);
-
-            $.ajax({
-                url: '/files/upload',
-                type: "POST",
-                async: false,
-                enctype: 'multipart/form-data',
-                contentType: false,
-                processData: false,
-                data : data,
-                beforeSend : function(xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                success: function (result) {
-                    console.log(result)
-                    alert("success")
-                },
-                error: function (e) {
-                    alert("fail")
-                }
-            });
-        }
 
     </script>
 </th:block>
