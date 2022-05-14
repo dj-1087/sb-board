@@ -1,0 +1,15 @@
+<div id="file-{{seq}}"
+     class="bg-white shadow py-2 px-1 mb-2">
+    <i class="bi bi-folder2-open mx-3"></i>
+    <span class="align-middle" style="font-size: 0.9rem">{{fileName}}</span>
+    <div class="float-end">
+        <a href="/files/{{id}}" download="{{fileName}}" data-seq="{{seq}}" data-isnew="{{isNew}}" class="download-btn">
+            <i class="bi bi-download"></i>
+        </a>
+        <div class="vr mx-2"></div>
+        <a href="#" data-id="{{id}}" data-seq="{{seq}}" data-isnew="{{isNew}}"
+           class="remove-file-btn me-3">
+            <i class="bi bi-x-lg text-secondary"></i>
+        </a>
+    </div>
+</div>

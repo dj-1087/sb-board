@@ -65,6 +65,7 @@ public class FileService {
                         .ext(extension).build();
                 this.uploadFile(multipartFile, file);
                 log.info("end upload");
+                log.info(file.getName());
 
                 post.addFile(file);
 
@@ -130,5 +131,9 @@ public class FileService {
         } catch (IOException e) {
             throw new RuntimeException("Could not create upload folder");
         }
+    }
+
+    public void delete(Long id) {
+        fileRepository.deleteById(id);
     }
 }

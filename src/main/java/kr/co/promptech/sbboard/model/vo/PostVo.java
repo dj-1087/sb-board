@@ -19,6 +19,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostVo {
+    private Long id;
+
     @NotBlank(message = "제목은 필수 입력 값입니다.")
     private String title;
 
@@ -26,4 +28,6 @@ public class PostVo {
     private String content;
 
     private List<MultipartFile> files;
+
+    private Set<File> fileSet;
 }

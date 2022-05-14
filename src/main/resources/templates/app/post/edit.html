@@ -3,22 +3,27 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-    <h1>게시물 작성</h1>
+
+    <h1>게시물 수정</h1>
     <hr>
-    <form id="post-form" enctype="multipart/form-data" th:action="@{/posts}" method="POST" th:object="${postVo}">
+    <form id="post-form" enctype="multipart/form-data" th:action="@{/posts/{id}(id=${postVo.id})}" method="POST" th:object="${postVo}">
+        <input type="hidden" name="_method" value="PUT">
+        <input id="post-id" type="hidden" th:value="${postVo.id}">
 
         <div class="row mb-3">
             <label for="title" class="col-sm-1 col-form-label text-nowrap">제목</label>
             <div class="col-sm-11">
                 <input type="text" class="form-control bg-white" id="title" th:field="*{title}">
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">제목을 입력해주세요</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">제목을
+                    입력해주세요</small>
             </div>
         </div>
         <div class="row mb-3">
             <label for="summernote" class="col-sm-1 col-form-label text-nowrap">내용</label>
             <div class="col-sm-11">
                 <textarea class="form-control bg-white shadow" id="summernote" th:field="*{content}"></textarea>
-                <small class="form-text text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">내용을 입력해주세요</small>
+                <small class="form-text text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">내용을
+                    입력해주세요</small>
             </div>
         </div>
 
@@ -27,32 +32,48 @@
             <div class="col-sm-11">
                 <input type="file" id="files" th:field="*{files}" multiple
                        class="form-control bg-white mb-3">
-                <div id="file-info-section" class="mb-3"></div>
+                <div id="file-info-section" class="mb-3">
+                    <div th:each="file : ${postVo.fileSet}"
+                         class="bg-white shadow py-2 px-1 mb-2 mx-2">
+                        <i class="bi bi-folder2-open mx-3"></i>
+                        <span th:text="${file.originalName}" class="align-middle" style="font-size: 0.9rem"></span>
+                        <div class="float-end">
+                            <a th:href="@{'/files/'+${file.id}}" class="download-btn"
+                               th:download="${file.originalName}">
+                                <i class="bi bi-download"></i>
+                            </a>
+                            <div class="vr mx-2"></div>
+                            <a href="#" th:data-id="${file.id}" th:data-isnew="false" class="remove-file-btn me-3">
+                                <i class="bi bi-x-lg text-secondary"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
 
         <div class="mt-3 d-flex justify-content-between">
             <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>
-            <button type="submit" class="btn btn-outline-success save-btn">저장</button>
+            <button type="submit" class="btn btn-outline-success update-btn">수정</button>
         </div>
     </form>
 
-<!--    <form id="file-form" method="POST" enctype="multipart/form-data" th:action="@{/files}" class="mb-3">-->
-<!--        <div class="row">-->
-<!--            <label for="files" class="col-sm-1 col-form-label text-nowrap">첨부 파일</label>-->
-<!--            <div class="col-sm-11">-->
-<!--                <input class="form-control bg-white" type="file" id="files" name="files" multiple>-->
-<!--            </div>-->
-<!--            <input name="test" type="hidden" value="test">-->
-<!--        </div>-->
-<!--    </form>-->
+    <!--    <form id="file-form" method="POST" enctype="multipart/form-data" th:action="@{/files}" class="mb-3">-->
+    <!--        <div class="row">-->
+    <!--            <label for="files" class="col-sm-1 col-form-label text-nowrap">첨부 파일</label>-->
+    <!--            <div class="col-sm-11">-->
+    <!--                <input class="form-control bg-white" type="file" id="files" name="files" multiple>-->
+    <!--            </div>-->
+    <!--            <input name="test" type="hidden" value="test">-->
+    <!--        </div>-->
+    <!--    </form>-->
 
 
-<!--    <div class="mt-3 d-flex justify-content-between">-->
-<!--        <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>-->
-<!--        <button type="button" class="btn btn-outline-success save-btn">저장</button>-->
-<!--    </div>-->
+    <!--    <div class="mt-3 d-flex justify-content-between">-->
+    <!--        <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>-->
+    <!--        <button type="button" class="btn btn-outline-success save-btn">저장</button>-->
+    <!--    </div>-->
 
 
 </div>
@@ -67,8 +88,8 @@
                 lang: "ko-KR",
                 height: 300,
                 callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-                    onImageUpload : function(files) {
-                        uploadSummernoteImageFile(files[0],this);
+                    onImageUpload: function (files) {
+                        uploadSummernoteImageFile(files[0], this);
                     },
                     onPaste: function (e) {
                         const clipboardData = e.originalEvent.clipboardData;
@@ -94,15 +115,15 @@
             const data = new FormData();
             data.append("file", file);
             $.ajax({
-                data : data,
-                beforeSend : function(xhr) {
+                data: data,
+                beforeSend: function (xhr) {
                     xhr.setRequestHeader(header, token);
                 },
-                type : "POST",
-                url : "/uploadSummernoteImageFile",
-                contentType : false,
-                processData : false,
-                success : function(data) {
+                type: "POST",
+                url: "/uploadSummernoteImageFile",
+                contentType: false,
+                processData: false,
+                success: function (data) {
                     //항상 업로드된 파일의 url이 있어야 한다.
                     $(editor).summernote('insertImage', data.url);
 

@@ -58,7 +58,7 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody CommentVo commentVo) {
+    public ResponseEntity<?> edit(@PathVariable("id") Long id, @RequestBody CommentVo commentVo) {
         ResultHandler result = commentService.update(id, commentVo);
         if (result.isFailure()) {
             return ResponseEntity.internalServerError().build();

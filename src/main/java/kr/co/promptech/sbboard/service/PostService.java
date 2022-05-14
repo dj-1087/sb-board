@@ -34,15 +34,24 @@ public class PostService {
         post.setAccount(account);
         log.info("======================");
         return postRepository.save(post);
+    }
 
-//        File file = postDto.getFile();
-//        post.setFile(file);
-//        file.setPost(post);
-//        postRepository.save(post);
+    public Post update(PostVo postVo) {
 
+        Post post = postRepository.findById(postVo.getId()).orElse(null);
+        if (post == null) {
+            return null;
+        }
+        post.setTitle(postVo.getTitle());
+        post.setContent(postVo.getContent());
+        return postRepository.save(post);
     }
 
     public List<Post> findAll() {
         return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+    }
+
+    public void delete(Long id) {
+        postRepository.deleteById(id);
     }
 }

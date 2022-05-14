@@ -1,7 +1,9 @@
 package kr.co.promptech.sbboard.config;
 
 import kr.co.promptech.sbboard.model.Comment;
+import kr.co.promptech.sbboard.model.Post;
 import kr.co.promptech.sbboard.model.vo.CommentVo;
+import kr.co.promptech.sbboard.model.vo.PostVo;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.NameTokenizers;
@@ -27,6 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.createTypeMap(CommentVo.class, Comment.class).addMappings(mapper -> mapper.skip(Comment::setId));
+        modelMapper.createTypeMap(PostVo.class, Post.class).addMappings(mapper -> mapper.skip(Post::setFileSet));
 
         modelMapper.getConfiguration()
                 .setDestinationNameTokenizer(NameTokenizers.CAMEL_CASE)

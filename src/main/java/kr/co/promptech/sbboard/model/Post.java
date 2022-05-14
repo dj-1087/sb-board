@@ -3,6 +3,7 @@ package kr.co.promptech.sbboard.model;
 import kr.co.promptech.sbboard.model.base.BaseTimeEntity;
 import kr.co.promptech.sbboard.model.enums.BoardType;
 import lombok.*;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Slf4j
 @Entity
 @Builder
 @Getter @Setter
@@ -35,11 +37,20 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
+    @Builder.Default
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<File> fileSet = new HashSet<>();
 
     public void addFile(File file) {
+        log.info("====in addFile====");
+        log.info(String.valueOf(this.getFileSet()));
+        if (this.getFileSet() == null) {
+            this.setFileSet(new HashSet<>());
+        }
         file.setPost(this);
+        log.info("====set post====");
+        log.info(file.getPost().getTitle());
         this.fileSet.add(file);
+        log.info("====added file====");
     }
 }
