@@ -8,6 +8,8 @@ import kr.co.promptech.sbboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +48,12 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public List<Post> findAll() {
-        return postRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+    public Page<Post> findAll(Pageable pageable) {
+        return postRepository.findAll(pageable);
+    }
+
+    public Page<Post> findAllByBoardType(BoardType boardType, Pageable pageable) {
+        return postRepository.findAllByBoardType(boardType, pageable);
     }
 
     public void delete(Long id) {

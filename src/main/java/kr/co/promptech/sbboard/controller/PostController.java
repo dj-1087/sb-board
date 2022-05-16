@@ -87,9 +87,13 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") Long id) {
+//    public String delete(@PathVariable("id") Long id) {
+//        postService.delete(id);
+//        return "redirect:/";
+//    }
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         postService.delete(id);
-        return "redirect:/";
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}/files")

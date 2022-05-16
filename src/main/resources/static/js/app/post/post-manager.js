@@ -46,7 +46,9 @@ PostManager.prototype.initEvent = function () {
         self.removePostButton.addEventListener("click", function (event) {
             event.preventDefault();
             console.log("remove ")
-            self.removePost(this.dataset.id).catch((error) => {
+            self.removePost(this.dataset.id).then(() => {
+                location.href = "/"
+            }).catch((error) => {
                 console.log("error occurred")
                 console.log(error)
             })

@@ -45,7 +45,7 @@
                     <tbody>
                     <tr th:each="post, iter : ${posts}" th:attr="data-post-id=${post.id}"
                         class="clickable" role="link" style="cursor: pointer">
-                        <th scope="row" th:text="${iter.size - iter.index}">1</th>
+                        <th scope="row" th:text="${totalCount - pagination.perPage*(pagination.current - 1) - iter.index}">1</th>
                         <td th:text="${post.title}" class="text-start">title</td>
                         <td th:text="${post.account.nickname}">nickname</td>
                         <td th:text="${#dates.format(post.createdAt, 'yyyy.MM.dd.')}">createdAt</td>
@@ -56,23 +56,7 @@
 
 <!--        </th:block>-->
     </div>
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <nav th:replace="fragments/pagination :: pagination" ></nav>
 </div>
 <script type="application/javascript" layout:fragment="script">
 
