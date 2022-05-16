@@ -46,7 +46,6 @@ public class AccountController {
     public String signUp(@ModelAttribute("accountVo") @Valid AccountVo accountVo,
                          BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            log.info("========has errors========");
             return "app/auth/sign-up";
         }
 
@@ -65,9 +64,6 @@ public class AccountController {
 
     @GetMapping("/email-token")
     public String checkEmailToken(EmailTokenParameter parameter, Model model) {
-        log.info("=======check email token controller=======");
-        log.info(parameter.getEmail());
-
         Account account = accountService.findByEmail(parameter.getEmail());
 
         ResultHandler result = accountService.checkExistence(account, parameter);

@@ -58,15 +58,12 @@ public class PostController {
                          @ModelAttribute("postVo") @Valid PostVo postVo,
                          BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("========has errors========");
             return "app/post/new";
         }
 
         Post post = postService.save(postVo, account);
 
         try {
-            log.info("before save");
-            log.info(postVo.getFiles().get(0).getOriginalFilename());
             fileService.save(postVo.getFiles(), post);
         } catch (Exception e) {
             return "app/post/new";
@@ -110,14 +107,11 @@ public class PostController {
     public String update( @ModelAttribute("postVo") @Valid PostVo postVo,
                           BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            log.info("========has errors========");
             return "app/post/edit";
         }
 
         Post post = postService.update(postVo);
         try {
-            log.info("before save");
-            log.info(postVo.getFiles().get(0).getOriginalFilename());
             fileService.save(postVo.getFiles(), post);
         } catch (Exception e) {
             return "app/post/edit";

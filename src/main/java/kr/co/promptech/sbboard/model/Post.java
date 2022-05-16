@@ -42,15 +42,10 @@ public class Post extends BaseTimeEntity {
     private Set<File> fileSet = new HashSet<>();
 
     public void addFile(File file) {
-        log.info("====in addFile====");
-        log.info(String.valueOf(this.getFileSet()));
         if (this.getFileSet() == null) {
             this.setFileSet(new HashSet<>());
         }
         file.setPost(this);
-        log.info("====set post====");
-        log.info(file.getPost().getTitle());
         this.fileSet.add(file);
-        log.info("====added file====");
     }
 }

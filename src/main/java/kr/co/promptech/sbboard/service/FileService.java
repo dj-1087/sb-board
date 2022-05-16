@@ -48,7 +48,6 @@ public class FileService {
                 String originalFilename = multipartFile.getOriginalFilename();
                 if (originalFilename == null || originalFilename.equals("")) {
                     // TODO: 추후 제대로 에러처리
-                    log.info("========= fileName empty =========");
                     continue;
                 }
 
@@ -61,31 +60,21 @@ public class FileService {
                         .path(path)
                         .ext(extension).build();
                 this.uploadFile(multipartFile, file);
-                log.info("end upload");
-                log.info(file.getName());
 
                 post.addFile(file);
 
-                log.info("file added");
-                log.info(String.valueOf(post.getFileSet().size()));
             }
 
-            log.info("before save");
             postRepository.save(post);
-            log.info("after save");
         } catch (Exception e) {
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
     }
 
     public void uploadFile(MultipartFile multipartFile, File file) {
-        log.info("in uploadFile");
-        log.info(file.getPath());
-        log.info(file.getName());
         try {
             Files.copy(multipartFile.getInputStream(), Paths.get(file.getPath() + file.getName()), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-            log.info("error occurred in uploadFile()");
             e.printStackTrace();
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
         }
@@ -96,8 +85,6 @@ public class FileService {
             Path root = Paths.get(dirPath);
             if (!Files.exists(root))
                 Files.createDirectories(root);
-            log.info("====end init dir====");
-            log.info(dirPath);
         } catch (IOException e) {
             throw new RuntimeException("Could not create upload folder");
         }

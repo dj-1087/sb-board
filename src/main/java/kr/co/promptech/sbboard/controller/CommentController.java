@@ -39,20 +39,9 @@ public class CommentController {
 
     @PostMapping("")
     public ResponseEntity<?> create(@CurrentUser Account account, @RequestBody CommentVo commentVo) {
-        log.info("=============comment controller=============");
-        log.info(commentVo.getContent());
-        log.info(commentVo.getPostId().toString());
-
         commentVo.setAccount(account);
         Comment comment = commentService.save(commentVo);
         CommentDto commentDto = modelMapper.map(comment, CommentDto.class);
-
-        log.info("=============check datetime=============");
-        if (comment.getCreatedAt() == null) {
-            log.info("no datetime");
-            log.info("id: " + comment.getId().toString());
-        }
-
 
         return ResponseEntity.ok().body(commentDto);
     }

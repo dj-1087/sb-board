@@ -32,7 +32,6 @@ public class PostService {
         post.setBoardType(BoardType.FREE);
 
         post.setAccount(account);
-        log.info("======================");
         return postRepository.save(post);
     }
 

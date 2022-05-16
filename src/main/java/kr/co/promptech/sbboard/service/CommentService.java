@@ -31,25 +31,10 @@ public class CommentService {
     }
 
     public Comment save(CommentVo commentVo) {
-//        Post post = postRepository.getById(commentVo.getPostId());
 
-        log.info("before mapper");
         Comment comment = modelMapper.map(commentVo, Comment.class);
-        log.info("after mapper");
-//        comment.setPost(post);
-        log.info(comment.getPost().getId().toString());
-        log.info("after set post");
 
-        Comment savedComment = commentRepository.save(comment);
-
-        log.info("=============check datetime in service=============");
-        if (savedComment.getCreatedAt() == null) {
-            log.info("no datetime");
-            log.info("id: " + savedComment.getCreatedAt());
-            log.info("id: " + savedComment.getUpdatedAt());
-        }
-
-        return savedComment;
+        return commentRepository.save(comment);
     }
 
     public void delete(Long id) {
