@@ -82,7 +82,7 @@ PostManager.prototype.refreshFileView = function () {
     document.querySelectorAll('.remove-file-btn').forEach((removeButton) => {
         removeButton.addEventListener('click', function (event) {
             event.preventDefault()
-            if (!confirm("해당 첨부파일을 삭제하시겠습니까?")) {
+            if (!confirm("해당 첨부파일을 영구적으로 삭제하시겠습니까?")) {
                 return false
             }
 
