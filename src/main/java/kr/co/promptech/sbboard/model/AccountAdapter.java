@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Getter
 public class AccountAdapter extends User {
-    private Account account;
+    private final Account account;
 
     public AccountAdapter(Account account) {
         super(account.getNickname(), account.getPassword(), authorities(account));

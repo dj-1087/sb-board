@@ -3,18 +3,12 @@ package kr.co.promptech.sbboard.config;
 import kr.co.promptech.sbboard.service.AccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
-import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-
-import javax.sql.DataSource;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -25,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/node/**", "/node_modules/**", "/sass/**").requestMatchers(PathRequest.toStaticResources().atCommonLocations());;
+        web.ignoring().antMatchers("/node/**", "/node_modules/**", "/sass/**").requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Override
@@ -33,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/auth/**").permitAll() // 누구나 접근 허용
-                .antMatchers("/admin").hasRole("ADMIN") // ADMIN만 접근 가능
+                .antMatchers("/admin").hasRole("ADMIN") // ADMIN 만 접근 가능
                 .anyRequest().authenticated() // 나머지 요청들은 권한의 종류에 상관 없이 권한이 있어야 접근 가능
                 .and()
                 .formLogin()

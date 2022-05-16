@@ -2,12 +2,10 @@ package kr.co.promptech.sbboard.service;
 
 import kr.co.promptech.sbboard.model.File;
 import kr.co.promptech.sbboard.model.Post;
-import kr.co.promptech.sbboard.model.enums.FileType;
 import kr.co.promptech.sbboard.repository.FileRepository;
 import kr.co.promptech.sbboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +26,6 @@ public class FileService {
 
     private final PostRepository postRepository;
     private final FileRepository fileRepository;
-    private final ModelMapper modelMapper;
 
     @Value("${spring.servlet.multipart.location}")
     private String UPLOAD_PATH;
@@ -73,33 +70,6 @@ public class FileService {
                 log.info(String.valueOf(post.getFileSet().size()));
             }
 
-//            for (MultipartFile multipartFile : files) {
-//                log.info("================multipartFile.getContentType()================");
-//                log.info(multipartFile.getContentType());
-//                log.info(multipartFile.getName());
-//                log.info(String.valueOf(multipartFile.getSize()));
-//
-//                log.info("========= before initDir =========");
-//
-//                log.info("========= after initDir =========");
-//
-//
-//                String originalFilename = multipartFile.getOriginalFilename();
-//                if (originalFilename == null || originalFilename.equals("")) {
-//                    // TODO: 추후 제대로 에러처리
-//                    log.info("========= fileName empty =========");
-//                    continue;
-//                }
-//                String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1];
-//                File file = File.builder().originalName(originalFilename).path(path).ext(extension).build();
-//                this.uploadFile(multipartFile, file);
-//
-//                post.getFileSet().add(file);
-////                FileDto fileDto = modelMapper.map(file, FileDto.class);
-////                fileDtoList.add(fileDto);
-//                log.info("=====added file=====");
-//                log.info(String.valueOf(post.getFileSet().size()));
-//            }
             log.info("before save");
             postRepository.save(post);
             log.info("after save");

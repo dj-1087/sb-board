@@ -5,7 +5,6 @@ import kr.co.promptech.sbboard.model.File;
 import kr.co.promptech.sbboard.model.Post;
 import kr.co.promptech.sbboard.model.dto.FileDto;
 import kr.co.promptech.sbboard.model.helper.CurrentUser;
-import kr.co.promptech.sbboard.model.response.PostFileResponse;
 import kr.co.promptech.sbboard.model.vo.PostVo;
 import kr.co.promptech.sbboard.service.FileService;
 import kr.co.promptech.sbboard.service.PostService;
@@ -13,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,10 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Slf4j
@@ -38,9 +32,6 @@ public class PostController {
     private final FileService fileService;
 
     private final ModelMapper modelMapper;
-
-    @Value("${spring.servlet.multipart.location}")
-    private String UPLOAD_PATH;
 
     @GetMapping("")
     public String newPost(Model model) {
@@ -65,7 +56,7 @@ public class PostController {
     @PostMapping(value = "")
     public String create(@CurrentUser Account account,
                          @ModelAttribute("postVo") @Valid PostVo postVo,
-                         BindingResult bindingResult, Model model) {
+                         BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.info("========has errors========");
             return "app/post/new";

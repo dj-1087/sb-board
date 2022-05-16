@@ -1,6 +1,5 @@
 package kr.co.promptech.sbboard.model;
 
-import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.base.BaseTimeEntity;
 import lombok.*;
 

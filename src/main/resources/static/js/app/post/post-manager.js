@@ -14,35 +14,44 @@ const PostManager = function () {
     this.fileList = new DataTransfer();
     this.fileInfoList = [];
 
-    this.initEvent();
 
-    this.loadFileList().then(() => this.refreshFileView());
+    this.initEvent();
+    if (this.form) {
+        this.loadFileList().then(() => this.refreshFileView());
+    }
 };
 
 PostManager.prototype.initEvent = function () {
     const self = this;
 
-    self.fileInput.addEventListener('change', function () {
-        console.log("changed")
-        for (const file of self.fileInput.files) {
-            self.fileList.items.add(file)
-        }
-        console.log(self.fileList)
-        self.refreshFileView();
-        console.log("refreshFileView")
-    });
+    if (self.form) {
+        self.fileInput.addEventListener('change', function () {
+            console.log("changed")
+            for (const file of self.fileInput.files) {
+                self.fileList.items.add(file)
+            }
+            console.log(self.fileList)
+            self.refreshFileView();
+            console.log("refreshFileView")
+        });
 
-    self.form.onsubmit = function (event) {
-        event.preventDefault();
-        self.fileInput.files = self.fileList.files;
-        self.form.submit();
+        self.form.onsubmit = function (event) {
+            event.preventDefault();
+            self.fileInput.files = self.fileList.files;
+            self.form.submit();
+        }
     }
 
-    // self.removePostButton.addEventListener("click", function (event) {
-    //     event.preventDefault();
-    //     console.log("remove ")
-    //     self.removePost(this.dataset.id)
-    // });
+    if (self.removePostButton) {
+        self.removePostButton.addEventListener("click", function (event) {
+            event.preventDefault();
+            console.log("remove ")
+            self.removePost(this.dataset.id).catch((error) => {
+                console.log("error occurred")
+                console.log(error)
+            })
+        });
+    }
 }
 
 PostManager.prototype.resetFileInput = function () {
@@ -157,7 +166,7 @@ PostManager.prototype.removeFile = async function (id) {
 PostManager.prototype.removePost = async function (id) {
     const self = this;
 
-    return fetch("/posts/" + id, {
+    return fetch(`/posts/${id}`, {
         method: "DELETE",
         mode: 'cors',
         headers: {
