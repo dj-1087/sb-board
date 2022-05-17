@@ -31,7 +31,6 @@ public class PostService {
     public Post save(PostVo postVo, Account account) {
 
         Post post = modelMapper.map(postVo, Post.class);
-        post.setBoardType(BoardType.FREE);
 
         post.setAccount(account);
         return postRepository.save(post);

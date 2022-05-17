@@ -1,6 +1,7 @@
 package kr.co.promptech.sbboard.model.vo;
 
 import kr.co.promptech.sbboard.model.File;
+import kr.co.promptech.sbboard.model.enums.BoardType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,8 @@ public class PostVo {
 
     @NotBlank(message = "내용은 필수 입력 값입니다.")
     private String content;
+
+    private BoardType boardType;
 
     private List<MultipartFile> files;
 
