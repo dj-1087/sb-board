@@ -74,6 +74,7 @@ public class PostController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable("id") Long id, Model model) {
+
         Post post = postService.findById(id);
         if (post == null) {
             // TODO: 추후 제대로 처리
@@ -124,4 +125,8 @@ public class PostController {
         return "redirect:/posts/" + post.getId();
     }
 
+    @ModelAttribute
+    public void setActive(@CurrentUser Account account, Model model) {
+        model.addAttribute(account);
+    }
 }

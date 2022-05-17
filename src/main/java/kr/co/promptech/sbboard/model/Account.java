@@ -1,7 +1,9 @@
 package kr.co.promptech.sbboard.model;
 
 import kr.co.promptech.sbboard.model.base.BaseTimeEntity;
+import kr.co.promptech.sbboard.model.enums.AccountType;
 import lombok.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -39,4 +41,12 @@ public class Account extends BaseTimeEntity {
 
     private String authorities;
 
+    public boolean isAdmin() {
+        for (String role : this.getAuthorities().split(",")) {
+            if (role.equals(AccountType.ADMIN.authority())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -11,8 +11,10 @@ const CommentManager = function () {
     this.postId = document.getElementById("post-id").value;
     this.commentList = []
 
+    this.user = {};
+
     this.initEvent();
-    this.loadCommentList().then(() => this.refreshView());
+    this.loadData().then(() => this.refreshView());
 }
 CommentManager.prototype.initEvent = function () {
     console.log("=======init=======")
@@ -79,7 +81,9 @@ CommentManager.prototype.refreshView = function () {
             id: comment.id,
             nickname: comment.accountNickname,
             content: comment.content,
-            createdAt: comment.createdAt
+            createdAt: comment.createdAt,
+            isAdmin: self.user.admin,
+            isWriter: comment.accountId === self.user.id
         })
         self.commentSection.innerHTML += commentView;
     }
@@ -139,6 +143,23 @@ CommentManager.prototype.loadCommentList = async function () {
     console.log("data loaded")
     console.log(self.commentList)
 
+};
+
+CommentManager.prototype.loadUser = async function () {
+    console.log("====== load user ======")
+
+    const self = this;
+    const response = await fetch("/auth/session", {method:'GET', mode:'cors'});
+    self.user = await response.json();
+    console.log("user info")
+    console.log(self.user)
+};
+
+CommentManager.prototype.loadData = function () {
+    const self = this;
+
+    console.log("====== load data ======")
+    return Promise.all([self.loadCommentList(), self.loadUser()]);
 };
 
 CommentManager.prototype.removeComment = function (id) {

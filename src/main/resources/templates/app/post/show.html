@@ -6,15 +6,15 @@
     <input id="post-id" type="hidden" th:value="${post.id}">
     <!--    <div th:text="${post.title}" class="h1 d-flex justify-content-between">title</div>-->
 
-    <h1 class="d-flex justify-content-between">
+    <h1>
         <span th:text="${post.title}"></span>
-        <span class="dropdown">
+        <span class="dropdown float-end" th:if="${account.isAdmin() or account.id == post.account.id}">
             <span id="post-option" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-three-dots-vertical"></i>
             </span>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="post-option">
-                <li><a class="dropdown-item edit-btn" th:href="@{'/posts/'+${post.id}+'/edit'}">수정</a></li>
-                <li><a class="dropdown-item remove-post-btn" href="#" th:data-id="${post.id}">삭제</a></li>
+                <li th:if="${account.id == post.account.id}" ><a class="dropdown-item edit-btn" th:href="@{'/posts/'+${post.id}+'/edit'}">수정</a></li>
+                <li ><a class="dropdown-item remove-post-btn" href="#" th:data-id="${post.id}">삭제</a></li>
             </ul>
         </span>
     </h1>

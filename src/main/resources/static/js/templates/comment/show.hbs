@@ -1,20 +1,24 @@
 <div id="comment-{{id}}" class="comment card mb-3">
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header">
         {{nickname}}
-        <span class="dropdown">
-            <span id="comment-option-{{id}}" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-three-dots-vertical"></i>
+        {{#ifCond isAdmin '||' isWriter }}
+            <span class="dropdown float-end">
+                <span id="comment-option-{{id}}" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </span>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="comment-option-{{id}}" >
+                    {{#if isWriter }}
+                        <li><a class="dropdown-item edit-comment-btn" href="#" data-id="{{id}}">수정</a></li>
+                    {{/if}}
+                    <li><a class="dropdown-item remove-comment-btn" href="#" data-id="{{id}}">삭제</a></li>
+                </ul>
             </span>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="comment-option-{{id}}" >
-                <li><a class="dropdown-item edit-comment-btn" href="#" data-id="{{id}}">수정</a></li>
-                <li><a class="dropdown-item remove-comment-btn" href="#" data-id="{{id}}">삭제</a></li>
-            </ul>
-        </span>
+        {{/ifCond}}
     </div>
     <div class="card-body">
         <blockquote class="blockquote mb-0">
             <p>{{content}}</p>
-            <footer class="blockquote-footer">{{createdAt}}</footer>
+            <footer class="blockquote-footer" style="font-size: 12px">{{createdAt}}</footer>
         </blockquote>
     </div>
 </div>

@@ -1,6 +1,8 @@
 package kr.co.promptech.sbboard.controller;
 
 import kr.co.promptech.sbboard.model.Account;
+import kr.co.promptech.sbboard.model.dto.AccountDto;
+import kr.co.promptech.sbboard.model.helper.CurrentUser;
 import kr.co.promptech.sbboard.model.parameter.EmailTokenParameter;
 import kr.co.promptech.sbboard.model.validator.AccountValidator;
 import kr.co.promptech.sbboard.model.vo.AccountVo;
@@ -8,6 +10,8 @@ import kr.co.promptech.sbboard.service.AccountService;
 import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +27,9 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
-
     private final AccountValidator accountValidator;
+
+    private final ModelMapper modelMapper;
 
     @InitBinder("accountVo")
     public void initBinder(WebDataBinder webDataBinder) {
@@ -78,4 +83,13 @@ public class AccountController {
         model.addAttribute("nickname", account.getNickname());
         return "app/auth/authenticate";
     }
+
+    @GetMapping("/session")
+    public ResponseEntity<?> session(@CurrentUser Account account) {
+        AccountDto accountDto = modelMapper.map(account, AccountDto.class);
+        accountDto.setAdmin(account.isAdmin());
+
+        return ResponseEntity.ok().body(accountDto);
+    }
+
 }
