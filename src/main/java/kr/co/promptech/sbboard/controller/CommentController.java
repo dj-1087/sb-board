@@ -49,10 +49,10 @@ public class CommentController {
     @PutMapping("/{id}")
     public ResponseEntity<?> edit(@PathVariable("id") Long id, @RequestBody CommentVo commentVo) {
         ResultHandler result = commentService.update(id, commentVo);
-        if (result.isFailure()) {
-            return ResponseEntity.internalServerError().build();
+        if (result.isSuccess()) {
+            return ResponseEntity.ok().build();
         }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.internalServerError().build();
     }
 
     @DeleteMapping("/{id}")

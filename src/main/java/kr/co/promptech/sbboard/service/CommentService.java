@@ -46,7 +46,7 @@ public class CommentService {
 
         Comment comment = commentRepository.findById(id).orElseThrow(null);
         if (comment == null) {
-            result.setFailure(true);
+            result.setSuccess(false);
             result.setErrorMessage("해당 댓글이 없습니다.");
             return result;
         }

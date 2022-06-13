@@ -59,12 +59,13 @@ public class AccountController {
 
         // send mail
         ResultHandler result = accountService.sendConfirmationMail(account);
-        if (result.isFailure()) {
-            model.addAttribute("error", result.getErrorMessage());
-            return "app/auth/sign-up";
+        if (result.isSuccess()) {
+            return "redirect:/";
+
         }
 
-        return "redirect:/";
+        model.addAttribute("error", result.getErrorMessage());
+        return "app/auth/sign-up";
     }
 
     @GetMapping("/email-token")
@@ -72,15 +73,15 @@ public class AccountController {
         Account account = accountService.findByEmail(parameter.getEmail());
 
         ResultHandler result = accountService.checkExistence(account, parameter);
-        if (result.isFailure()) {
-            model.addAttribute("error", result.getErrorMessage());
+        if (result.isSuccess()) {
+            accountService.updateEmailConfirmed(account);
+
+            model.addAttribute("error", null);
+            model.addAttribute("nickname", account.getNickname());
             return "app/auth/authenticate";
         }
 
-        accountService.updateEmailConfirmed(account);
-
-        model.addAttribute("error", null);
-        model.addAttribute("nickname", account.getNickname());
+        model.addAttribute("error", result.getErrorMessage());
         return "app/auth/authenticate";
     }
 

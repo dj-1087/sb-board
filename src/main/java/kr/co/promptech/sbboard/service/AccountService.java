@@ -81,7 +81,7 @@ public class AccountService implements UserDetailsService {
 
             mailSender.send(mailMessage);
         } catch (MessagingException | UnsupportedEncodingException exception) {
-            result.setFailure(true);
+            result.setSuccess(false);
             result.setErrorMessage("메일 전송 에러");
             return result;
         }
@@ -93,13 +93,13 @@ public class AccountService implements UserDetailsService {
         ResultHandler result = new ResultHandler();
 
         if (account == null) {
-            result.setFailure(true);
+            result.setSuccess(false);
             result.setErrorMessage("해당 이메일을 가진 회원정보가 없습니다.");
             return result;
         }
 
         if (!account.getEmailConfirmToken().equals(parameter.getToken())) {
-            result.setFailure(true);
+            result.setSuccess(false);
             result.setErrorMessage("유효하지 않은 토큰 값입니다.");
             return result;
         }
