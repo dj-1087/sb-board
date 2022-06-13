@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 @Getter @Setter
 public class Pagination {
-    private static final int DEFAULT_GUTTER = 5;
+    private static final int DEFAULT_GUTTER = 2;
     private static final int PAGING_ITEMS = 10;
 
     private Page<?> page;
@@ -31,7 +31,7 @@ public class Pagination {
 
         this.current = page.getNumber() + 1;
         this.begin = Math.max(1, current - DEFAULT_GUTTER);
-        this.end = Math.min(this.begin + PAGING_ITEMS, page.getTotalPages());
+        this.end = Math.min(this.begin + 2*DEFAULT_GUTTER, page.getTotalPages());
         this.url = url;
     }
 }
