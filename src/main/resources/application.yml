@@ -55,6 +55,10 @@ spring:
         #        one-indexed-parameters: true
         default-page-size: 10
 
+server:
+  error:
+    path: /error
+
 logging:
   level:
     org.springframework: DEBUG

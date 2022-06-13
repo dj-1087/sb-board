@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/app.css}" />
+
+    <title>404 - Not Found</title>
+
+    <style>
+        .error-code-div {
+            font-size: 10rem;
+            font-weight: 900;
+            letter-spacing: -1rem;
+            color: #e91b23;
+            text-align: center;
+        }
+
+        .error-code-div .error-code-span {
+            text-shadow: -8px 0px 0px #000;
+        }
+        .error-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .error-content {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container vh-100">
+        <div class="error-code-div">
+            <span class="error-code-span">4</span>
+            <span class="error-code-span">0</span>
+            <span class="error-code-span">4</span>
+        </div>
+        <div class="error-title mb-3">죄송합니다.<br/>
+            요청하신 페이지를 찾을 수 없습니다.</div>
+        <div class="error-content mb-3">
+            방문하시려는 페이지의 주소가 잘못 입력되었거나,<br />
+            페이지의 주소가 변경 혹은 삭제되어 요청하신 페이지를 찾을 수 없습니다.<br />
+            <br />
+            입력하신 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />
+            <br />
+            감사합니다.<br />
+        </div>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/}" class="btn btn-outline-secondary px-3">홈으로 이동</a>
+        </div>
+    </div>
+</body>
+</html>
