@@ -1,0 +1,1 @@
+ALTER TABLE files modify original_name VARCHAR(100);
