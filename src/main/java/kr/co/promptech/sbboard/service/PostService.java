@@ -55,6 +55,10 @@ public class PostService {
         return postRepository.findAllByBoardType(boardType, pageable);
     }
 
+    public Page<Post> search(String keyword, Pageable pageable) {
+        return postRepository.findAllByTitleContaining(keyword, pageable);
+    }
+
     public void delete(Long id) {
         postRepository.deleteById(id);
     }

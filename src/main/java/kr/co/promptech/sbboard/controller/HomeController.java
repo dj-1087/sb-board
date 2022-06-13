@@ -47,13 +47,30 @@ public class HomeController {
 
     @GetMapping("/board")
     public String board(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-                       @RequestParam BoardType type,
-                       @CurrentUser Account account, Model model) {
+                        @RequestParam BoardType type,
+                        @CurrentUser Account account, Model model) {
 
         model.addAttribute(account);
 
         Page<Post> posts = postService.findAllByBoardType(type, pageable);
 //        List<Post> posts = postService.findAll();
+        String url = "/";
+        Pagination pagination = new Pagination(posts, pageable, url);
+
+        model.addAttribute("posts", posts.getContent());
+        model.addAttribute("totalCount", posts.getTotalElements());
+        model.addAttribute("pagination", pagination);
+        return "app/home";
+    }
+
+    @GetMapping("/search")
+    public String search(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+                         @RequestParam(value = "keyword") String keyword,
+                         @CurrentUser Account account, Model model) {
+        model.addAttribute(account);
+
+        Page<Post> posts = postService.search(keyword, pageable);
+
         String url = "/";
         Pagination pagination = new Pagination(posts, pageable, url);
 

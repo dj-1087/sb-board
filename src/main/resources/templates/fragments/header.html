@@ -18,8 +18,9 @@
                 <li><a th:href="@{/board(type=${boardType.FREE})}" class="nav-link px-2 text-white">자유게시판</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
-                <input type="search" class="form-control form-control-dark me-2" placeholder="게시물 검색..." aria-label="Search">
+            <form id="search-form" th:action="@{/search}" method="GET"
+                  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
+                <input type="search" name="keyword" class="form-control form-control-dark me-2" placeholder="게시물 검색..." aria-label="Search">
                 <button type="submit" class="btn btn-warning text-nowrap">검색</button>
             </form>
 
