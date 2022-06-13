@@ -53,6 +53,7 @@ public class CommentService {
 
         comment.setContent(commentVo.getContent());
         commentRepository.save(comment);
+        result.setSuccess(true);
         return result;
     }
 }

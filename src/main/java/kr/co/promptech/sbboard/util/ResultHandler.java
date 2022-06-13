@@ -10,7 +10,7 @@ public class ResultHandler {
     private String errorMessage;
 
     public ResultHandler() {
-        this.isSuccess = true;
+        this.isSuccess = false;
         this.errorMessage = "";
     }
 }

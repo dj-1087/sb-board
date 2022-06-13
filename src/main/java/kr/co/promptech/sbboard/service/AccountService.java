@@ -80,6 +80,8 @@ public class AccountService implements UserDetailsService {
             mailMessage.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(account.getEmail(), account.getNickname(), "UTF-8"));
 
             mailSender.send(mailMessage);
+            result.setSuccess(true);
+
         } catch (MessagingException | UnsupportedEncodingException exception) {
             result.setSuccess(false);
             result.setErrorMessage("메일 전송 에러");
@@ -104,6 +106,7 @@ public class AccountService implements UserDetailsService {
             return result;
         }
 
+        result.setSuccess(true);
         return result;
     }
 
