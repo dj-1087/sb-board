@@ -126,4 +126,9 @@ public class AccountService implements UserDetailsService {
         return new AccountAdapter(account);
     }
 
+    public Account resetEmailConfirmToken(Account account) {
+        String token = this.generateEmailConfirmToken();
+        account.setEmailConfirmToken(token);
+        return accountRepository.save(account);
+    }
 }

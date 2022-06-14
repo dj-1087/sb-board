@@ -85,6 +85,18 @@ public class AccountController {
         return "app/auth/authenticate";
     }
 
+    @GetMapping("/email-token/resend")
+    public ResponseEntity<?> resendConfirmationMail(@CurrentUser Account account) {
+        account = accountService.resetEmailConfirmToken(account);
+
+        ResultHandler result = accountService.sendConfirmationMail(account);
+        if (result.isSuccess()) {
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.internalServerError().body(result);
+    }
+
     @GetMapping("/session")
     public ResponseEntity<?> session(@CurrentUser Account account) {
         AccountDto accountDto = modelMapper.map(account, AccountDto.class);
