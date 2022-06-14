@@ -1,6 +1,6 @@
 <form id="post-form" th:fragment="_form"
-      enctype="multipart/form-data" method="POST"
-      th:action="@{/posts}" th:object="${postVo}"
+      enctype="multipart/form-data" th:method="${postVo.id == null ? 'POST' : 'PUT'}"
+      th:action="@{/posts/{id}(id = ${postVo.id})}" th:object="${postVo}"
       th:with="boardTypeEnum=${T(kr.co.promptech.sbboard.model.enums.BoardType)}">
 
     <div class="row mb-3">

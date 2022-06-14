@@ -8,7 +8,6 @@
     <hr>
 <!--    <form id="post-form" enctype="multipart/form-data" th:action="@{/posts/{id}(id=${postVo.id})}" method="POST" th:object="${postVo}">-->
 <!--        <input type="hidden" name="_method" value="PUT">-->
-<!--        <input id="post-id" type="hidden" th:value="${postVo.id}">-->
 
 <!--        <div class="row mb-3">-->
 <!--            <label for="title" class="col-sm-1 col-form-label text-nowrap">제목</label>-->
@@ -59,6 +58,7 @@
 <!--        </div>-->
 <!--    </form>-->
 
+    <input id="post-id" type="hidden" th:value="${postVo.id}">
     <form th:replace="app/post/_form :: _form"></form>
 
 
