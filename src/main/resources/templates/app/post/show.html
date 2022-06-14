@@ -6,7 +6,7 @@
     <input id="post-id" type="hidden" th:value="${post.id}">
     <!--    <div th:text="${post.title}" class="h1 d-flex justify-content-between">title</div>-->
 
-    <h1>
+    <h1 class="pt-5">
         <span th:text="${post.title}"></span>
         <span class="dropdown float-end" th:if="${account.isAdmin() or account.id == post.account.id}">
             <span id="post-option" data-bs-toggle="dropdown" aria-expanded="false">
@@ -20,7 +20,7 @@
     </h1>
 
     <hr>
-    <div class="px-3 mb-3">
+    <div class="px-3 my-5">
         <div th:utext="${post.content}" class="mb-3">content</div>
         <!--        <div th:if="${post.file != null}">-->
         <!--            <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">-->
@@ -38,7 +38,16 @@
         </div>
     </div>
 
-    <h4>comments <span style="color: skyblue">0</span></h4>
+    <div>
+        <span class="fs-3 fw-bold">
+            comments <span class="comments-count" th:text="${#lists.size(post.comments)}" style="color: skyblue">0</span>
+        </span>
+        <span id="thumbs-up-btn" class="float-end align-middle mt-2" th:classappend="${postThumbDto.userClicked} ? 'text-primary'" style="font-size: 1rem; cursor: pointer;">
+            <i class="bi bi-heart"></i>&nbsp;공감&nbsp;
+            <span id="thumbs-count" th:text="${postThumbDto.postThumbCount}">0</span>
+            <input id="user-clicked" th:value="${postThumbDto.userClicked}" type="hidden">
+        </span>
+    </div>
     <hr>
     <div id="comment-section" class="px-3"></div>
     <form id="comment-form" class="px-3">
@@ -54,47 +63,49 @@
 
 </div>
 <th:block layout:fragment="script">
-    <script th:src="@{/js/app/comment/comment-manager.js}"></script>
-    <script th:src="@{/js/app/post/post-manager.js}"></script>
+    <script th:src="@{/js/app/comment-manager.js}"></script>
+    <script th:src="@{/js/app/post-manager.js}"></script>
+    <script th:src="@{/js/app/thumb-manager.js}"></script>
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
             console.log("=======load=======")
-            const commentManager = new CommentManager();
             const postManager = new PostManager();
+            const commentManager = new CommentManager();
+            const thumbManger = new ThumbManager();
         })
         // window.addEventListener('load', () => {
         //     // const CommentManager = new CommentManager();
         // })
-        async function checkResponseOnDownload(id) {
-            const response = await fetch("/files/" + id, { method: "GET", mode: 'cors' })
-                .catch((error) => {
-                    alert(error)
-                    return false
-                });
-
-            let blob = await response.blob();
-
-            console.log("check response data")
-            // const test = new Blob();
-            // blob = blob.slice(0, blob.size, "image/jpeg")
-            // blob.type = 'image/jpeg'
-            console.log(response)
-            console.log(blob)
-            download(blob)
-        }
-
-        function download(blob, filename) {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.style.display = 'none';
-            a.href = url;
-            // the filename you want
-            a.download = filename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-        }
+        // async function checkResponseOnDownload(id) {
+        //     const response = await fetch("/files/" + id, { method: "GET", mode: 'cors' })
+        //         .catch((error) => {
+        //             alert(error)
+        //             return false
+        //         });
+        //
+        //     let blob = await response.blob();
+        //
+        //     console.log("check response data")
+        //     // const test = new Blob();
+        //     // blob = blob.slice(0, blob.size, "image/jpeg")
+        //     // blob.type = 'image/jpeg'
+        //     console.log(response)
+        //     console.log(blob)
+        //     download(blob)
+        // }
+        //
+        // function download(blob, filename) {
+        //     const url = window.URL.createObjectURL(blob);
+        //     const a = document.createElement('a');
+        //     a.style.display = 'none';
+        //     a.href = url;
+        //     // the filename you want
+        //     a.download = filename;
+        //     document.body.appendChild(a);
+        //     a.click();
+        //     document.body.removeChild(a);
+        //     window.URL.revokeObjectURL(url);
+        // }
     </script>
 </th:block>
 </body>
