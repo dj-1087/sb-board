@@ -10,28 +10,28 @@
      aria-label="Page navigation"
 >
     <ul class="pagination justify-content-center">
-        <li th:if="${begin > 1}" class="page-item">
+        <li class="page-item" th:classappend="${begin <= 1} ? 'disabled'">
             <a class="page-link" href="#" th:href="@{{pageUrl}(pageUrl=${url}, page=0)}+'&'+${query}" aria-label="Previous">
                 <span class="d-none">double-left</span><i class="bi bi-chevron-double-left"></i>
             </a>
         </li>
-        <li th:if="${begin > 1}" class="page-item">
+        <li class="page-item" th:classappend="${begin <= 1} ? 'disabled'">
             <a class="page-link" href="#" th:href="@{{pageUrl}(pageUrl=${url}, page=${begin - 2})}+'&'+${query}">
                 <span class="d-none">angle-left</span><i class="bi bi-chevron-left"></i>
             </a>
         </li>
         <li class="page-item" th:each="i : ${#numbers.sequence(begin, end)}" th:classappend="${i == current} ? 'active'">
-            <a class="page-link" href="#" th:href="@{{pageUrl}(pageUrl=${url}, page=${i - 1})}+'&'+${query}">
+            <a th:if="${i > 0}" class="page-link" href="#" th:href="@{{pageUrl}(pageUrl=${url}, page=${i - 1})}+'&'+${query}">
                 <span th:text="${i}"></span>
             </a>
         </li>
-        <li th:if="${end < (totalPages)}">
+        <li class="page-item" th:classappend="${end >= (totalPages)} ? 'disabled'">
             <a class="page-link" href="#" th:href="@{{pageUrl}(pageUrl=${url}, page=${end})}+'&'+${query}">
                 <span class="d-none">angle-right</span><i class="bi bi-chevron-right"></i>
             </a>
         </li>
 
-        <li th:if="${end < totalPages - 1}">
+        <li class="page-item" th:classappend="${end >= (totalPages - 1)} ? 'disabled'">
             <a class="page-link" href="#" th:href="@{{pageUrl}(pageUrl=${url}, page=${totalPages - 1})}+'&'+${query}">
                 <span class="d-none">double-right</span><i class="bi bi-chevron-double-right"></i>
             </a>
