@@ -9,7 +9,7 @@
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-4">
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
-                    <div class="card-body p-5">
+                    <div class="card-body px-5 pt-5 pb-4">
 
                         <h3 class="mb-5 text-center">로그인</h3>
                         <!--                        <img th:src="@{/images/logo.png}" width="130px" class="mb-5">-->
@@ -41,7 +41,12 @@
 
                             <button type="submit" class="btn btn-primary w-100 mb-3">로그인</button>
                         </form>
-                        <a th:href="@{/auth/sign-up}" class="btn btn-secondary w-100">회원가입</a>
+                        <a th:href="@{/auth/sign-up}" class="btn btn-secondary w-100 mb-3">회원가입</a>
+                        <div class="d-flex justify-content-center ps-4">
+                            <a th:href="@{/}" class="link-secondary">아이디 찾기</a>
+                            <div class="vr mx-2"></div>
+                            <a th:href="@{/}" class="link-secondary">비밀번호 재설정</a>
+                        </div>
                     </div>
                 </div>
             </div>
