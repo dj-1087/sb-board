@@ -42,7 +42,9 @@ ThumbManager.prototype.thumbsUp = async function () {
         return false;
     }
     const postThumbDto = await response.json();
+    console.log(postThumbDto)
     self.thumbsCount = postThumbDto.postThumbCount;
+    self.userClicked = postThumbDto.userClicked;
 };
 
 ThumbManager.prototype.refreshView = function() {
@@ -51,5 +53,9 @@ ThumbManager.prototype.refreshView = function() {
     const thumbsCountSpan = document.getElementById("thumbs-count");
     thumbsCountSpan.innerText = self.thumbsCount;
     const userClickedInput = document.getElementById("user-clicked");
-    userClickedInput.innerText = self.userClicked;
+    userClickedInput.value = self.userClicked;
+
+    if (self.userClicked === true) {
+        self.thumbsUpButton.classList.add('text-primary');
+    }
 }
