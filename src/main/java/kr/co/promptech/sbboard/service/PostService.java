@@ -25,7 +25,7 @@ public class PostService {
     private final ModelMapper modelMapper;
 
     public Post findById(Long id) {
-        return postRepository.findById(id).orElseThrow(null);
+        return postRepository.findById(id).orElse(null);
     }
 
     public Post save(PostVo postVo, Account account) {
