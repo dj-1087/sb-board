@@ -44,6 +44,7 @@ public class PostService {
         }
         post.setTitle(postVo.getTitle());
         post.setContent(postVo.getContent());
+        post.setBoardType(postVo.getBoardType());
         return postRepository.save(post);
     }
 
