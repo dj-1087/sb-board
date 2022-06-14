@@ -42,8 +42,10 @@
         <span class="fs-3 fw-bold">
             comments <span class="comments-count" th:text="${#lists.size(post.comments)}" style="color: skyblue">0</span>
         </span>
-        <span id="thumbs-up-btn" class="float-end align-middle mt-2" th:classappend="${postThumbDto.userClicked} ? 'text-primary'" style="font-size: 1rem; cursor: pointer;">
-            <i class="bi bi-heart"></i>&nbsp;공감&nbsp;
+        <span id="thumbs-up-btn" class="float-end align-middle mt-3 me-4" th:classappend="${postThumbDto.userClicked} ? 'text-primary'" style="font-size: 1rem; cursor: pointer;">
+            <i class="bi bi-heart disabled-icon" th:classappend="${postThumbDto.userClicked} ? 'd-none' : ''"></i>
+            <i class="bi bi-heart-fill active-icon" th:classappend="${postThumbDto.userClicked} ? '' : 'd-none'"></i>
+            &nbsp;공감&nbsp;
             <span id="thumbs-count" th:text="${postThumbDto.postThumbCount}">0</span>
             <input id="user-clicked" th:value="${postThumbDto.userClicked}" type="hidden">
         </span>

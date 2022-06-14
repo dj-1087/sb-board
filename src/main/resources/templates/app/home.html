@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <body xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
@@ -11,57 +10,63 @@
     </h1>
     <div th:if="${account != null && !account.emailConfirmed}"
          class="alert alert-warning mb-5" role="alert">
-        아직 이메일 인증을 완료하지 않은 계정입니다.<br />
-        가입하신 메일계정으로 인증을 완료해주시길 바랍니다.<br />
+        아직 이메일 인증을 완료하지 않은 계정입니다.<br/>
+        가입하신 메일계정으로 인증을 완료해주시길 바랍니다.<br/>
         <small class="text-danger">※주의: 이메일 인증을 하지 않을 경우, 추후 비밀번호 재설정 시 불이익이 발생할 수 있습니다.</small>
         <button id="resend-confirm-mail-btn" class="btn btn-sm btn-secondary float-end">인증메일 재전송</button>
     </div>
 
     <div class="container text-center">
-<!--        <th:block sec:authorize="isAnonymous()" >-->
-<!--            <div class="row align-items-center mb-5">-->
-<!--                <div class="col text-end">-->
-<!--                    <a th:href="@{/auth/sign-up}" class="btn btn-outline-primary">회원가입</a>-->
-<!--                </div>-->
-<!--                <div class="col text-start">-->
-<!--                    <a th:href="@{/auth/login}" class="btn btn-outline-success">로그인</a>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </th:block>-->
-<!--        <th:block sec:authorize="isAuthenticated()" >-->
-            <div class="row text-end mb-3">
-                <div class="col text-end">
-                    <a th:href="@{/posts}" class="btn btn-sm btn-outline-success">게시물 작성</a>
-                </div>
+        <!--        <th:block sec:authorize="isAnonymous()" >-->
+        <!--            <div class="row align-items-center mb-5">-->
+        <!--                <div class="col text-end">-->
+        <!--                    <a th:href="@{/auth/sign-up}" class="btn btn-outline-primary">회원가입</a>-->
+        <!--                </div>-->
+        <!--                <div class="col text-start">-->
+        <!--                    <a th:href="@{/auth/login}" class="btn btn-outline-success">로그인</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </th:block>-->
+        <!--        <th:block sec:authorize="isAuthenticated()" >-->
+        <div class="row text-end mb-3">
+            <div class="col text-end">
+                <a th:href="@{/posts}" class="btn btn-sm btn-outline-success">게시물 작성</a>
             </div>
-            <div>
-                <table class="table table-hover mb-5 bg-white shadow">
-                    <thead>
-                    <tr>
-                        <th scope="col">No</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">작성일</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:if="${#lists.size(posts) == 0}">
-                        <td colspan="4" class="align-middle text-center" style="height: 30vh">게시물이 없습니다.</td>
-                    </tr>
-                    <tr th:each="post, iter : ${posts}" th:attr="data-post-id=${post.id}"
-                        class="clickable" role="link" style="cursor: pointer">
-                        <th scope="row" th:text="${totalCount - pagination.perPage*(pagination.current - 1) - iter.index}">1</th>
-                        <td th:text="${post.title}" class="text-start">title</td>
-                        <td th:text="${post.account.nickname}">nickname</td>
-                        <td th:text="${#dates.format(post.createdAt, 'yyyy.MM.dd.')}">createdAt</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+        </div>
+        <div>
+            <table class="table table-hover mb-5 bg-white shadow">
+<!--                <colgroup>-->
+<!--                    <col style="width: 10%">-->
+<!--                    <col style="width: 50%">-->
+<!--                    <col style="width: 20%">-->
+<!--                    <col style="width: 20%">-->
+<!--                </colgroup>-->
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 10%">No</th>
+                    <th scope="col" style="width: 50%">제목</th>
+                    <th scope="col" style="width: 20%">작성자</th>
+                    <th scope="col" style="width: 20%">작성일</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.size(posts) == 0}">
+                    <td colspan="4" class="align-middle text-center" style="height: 30vh">게시물이 없습니다.</td>
+                </tr>
+                <tr th:each="post, iter : ${posts}" th:attr="data-post-id=${post.id}"
+                    class="clickable" role="link" style="cursor: pointer">
+                    <th th:text="${totalCount - pagination.perPage*(pagination.current - 1) - iter.index}">1</th>
+                    <td th:text="${post.title}" class="text-start">title</td>
+                    <td th:text="${post.account.nickname}">nickname</td>
+                    <td th:text="${#dates.format(post.createdAt, 'yyyy.MM.dd.')}">createdAt</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-<!--        </th:block>-->
+        <!--        </th:block>-->
     </div>
-    <nav th:replace="fragments/pagination :: pagination" ></nav>
+    <nav th:replace="fragments/pagination :: pagination"></nav>
 </div>
 <script type="application/javascript" layout:fragment="script">
 

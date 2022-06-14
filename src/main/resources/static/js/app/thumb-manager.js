@@ -56,6 +56,20 @@ ThumbManager.prototype.refreshView = function() {
     userClickedInput.value = self.userClicked;
 
     if (self.userClicked === true) {
-        self.thumbsUpButton.classList.add('text-primary');
+        self.activateUserClickedView()
     }
 }
+
+ThumbManager.prototype.activateUserClickedView = function () {
+    const self = this;
+    self.thumbsUpButton.classList.add('text-primary');
+    self.thumbsUpButton.querySelector('.disabled-icon').classList.add("d-none");
+    self.thumbsUpButton.querySelector('.active-icon').classList.remove("d-none");
+};
+
+ThumbManager.prototype.disableUserClickedView = function () {
+    const self = this;
+    self.thumbsUpButton.classList.remove('text-primary');
+    self.thumbsUpButton.querySelector('.disabled-icon').classList.remove("d-none");
+    self.thumbsUpButton.querySelector('.active-icon').classList.add("d-none");
+};
