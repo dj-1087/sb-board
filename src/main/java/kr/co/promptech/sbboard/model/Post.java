@@ -29,6 +29,9 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     List<Comment> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    List<Thumb> thumbs = new ArrayList<>();
+
     private String title;
 
     @Column(columnDefinition = "LONGTEXT")

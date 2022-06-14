@@ -4,10 +4,12 @@ import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.File;
 import kr.co.promptech.sbboard.model.Post;
 import kr.co.promptech.sbboard.model.dto.FileDto;
+import kr.co.promptech.sbboard.model.dto.PostThumbDto;
 import kr.co.promptech.sbboard.model.helper.CurrentUser;
 import kr.co.promptech.sbboard.model.vo.PostVo;
 import kr.co.promptech.sbboard.service.FileService;
 import kr.co.promptech.sbboard.service.PostService;
+import kr.co.promptech.sbboard.service.ThumbService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -30,6 +32,7 @@ public class PostController {
 
     private final PostService postService;
     private final FileService fileService;
+    private final ThumbService thumbService;
 
     private final ModelMapper modelMapper;
 
@@ -41,14 +44,16 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") Long id, Model model) {
+    public String show(@PathVariable("id") Long id, @CurrentUser Account account, Model model) {
 
         Post post = postService.findById(id);
         if (post == null) {
             return "redirect:/";
         }
-
         model.addAttribute(post);
+
+        PostThumbDto postThumbDto = thumbService.getThumbDtoByPost(post, account);
+        model.addAttribute(postThumbDto);
 
         return "app/post/show";
     }
