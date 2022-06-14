@@ -3,7 +3,6 @@ package kr.co.promptech.sbboard.model;
 import kr.co.promptech.sbboard.model.base.BaseTimeEntity;
 import kr.co.promptech.sbboard.model.enums.AccountType;
 import lombok.*;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,6 +25,9 @@ public class Account extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    List<Thumb> thumbs = new ArrayList<>();
 
     @Column(unique = true)
     private String email;
