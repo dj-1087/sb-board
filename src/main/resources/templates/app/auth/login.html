@@ -21,7 +21,7 @@
                         <form id="signup-form" th:action="@{/auth/login}" method="POST">
 
                             <div class="row mb-3">
-                                <label for="email" class="col-sm-3 col-form-label">이메일</label>
+                                <label for="email" class="col-sm-3 col-form-label text-nowrap">이메일</label>
                                 <div class="col-sm-9">
                                     <input id="email" type="email" name="username" class="form-control"
                                            placeholder="mail@example.com" required>
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="password" class="col-sm-3 col-form-label">비밀번호</label>
+                                <label for="password" class="col-sm-3 col-form-label text-nowrap">비밀번호</label>
                                 <div class="col-sm-9">
                                     <input id="password" type="password" name="password" autocomplete="on"
                                            class="form-control" required minlength="8" maxlength="20">

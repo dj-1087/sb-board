@@ -88,6 +88,8 @@ CommentManager.prototype.refreshView = function () {
         self.commentSection.innerHTML += commentView;
     }
 
+    document.querySelector('.comments-count').innerHTML = self.commentList.length + '';
+
     document.querySelectorAll('.remove-comment-btn').forEach((removeButton) => {
         removeButton.addEventListener('click', async function (event) {
             event.preventDefault();
