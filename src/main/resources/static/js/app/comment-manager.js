@@ -195,10 +195,7 @@ CommentManager.prototype.changeToEditView = function (id) {
     const self = this
 
     const view = document.querySelector(`#comment-${id} .card-body`)
-    const data = _.find(self.commentList, {'id': id})
-    console.log("edit data")
-    console.log('id> ', id)
-    console.log(data);
+    const data = _.find(self.commentList, {'id': parseInt(id)})
 
     view.innerHTML = self.commentEditTemplate({
         id: data.id,
