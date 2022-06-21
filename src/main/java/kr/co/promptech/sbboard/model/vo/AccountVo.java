@@ -14,6 +14,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccountVo {
+    private Long id;
+
     @NotBlank(message = "닉네임은 필수 입력 값입니다.")
     private String nickname;
 

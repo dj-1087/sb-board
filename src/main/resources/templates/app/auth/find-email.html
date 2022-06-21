@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<body xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app}">
+<div layout:fragment="content" class="main-content">
+    <!--    <h1>회원가입</h1>-->
+    <!--    <hr>-->
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-6">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body px-5 pt-5 pb-4">
+                        <h3 class="mb-5 text-center">이메일 찾기</h3>
+                        <form id="find-email-form" th:action="@{/auth/find-email}" method="POST" th:object="${accountVo}" novalidate>
+
+                            <div class="row mb-5">
+                                <label for="nickname" class="col-sm-3 col-form-label text-nowrap text-center">닉네임</label>
+                                <div class="col-sm-9">
+                                    <input id="nickname" type="text" th:field="*{nickname}" class="form-control"
+                                           placeholder="닉네임을 입력해주세요" aria-describedby="nickname-help" required minlength="3" maxlength="20"/>
+                                    <small class="invalid-feedback">닉네임을 입력하세요.</small>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a th:href="@{/auth/login}" class="btn btn-secondary px-4">로그인</a>
+                                <button type="submit" class="btn btn-primary px-4">확인</button>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/app/sign-up-manager.js}"></script>
+    <script type="application/javascript">
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById('find-email-form')
+
+            form.addEventListener('submit', function(event) {
+                console.log('do submit event')
+                if (!this.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                this.classList.add('was-validated');
+            }, false)
+        });
+
+    </script>
+</th:block>
+</body>

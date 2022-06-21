@@ -131,4 +131,61 @@ public class AccountService implements UserDetailsService {
         account.setEmailConfirmToken(token);
         return accountRepository.save(account);
     }
+
+    public String findEmailByNickname(String nickname) {
+        Account account = accountRepository.findByNickname(nickname);
+        if (account == null) {
+            return null;
+        }
+
+        return account.getEmail();
+    }
+
+    public boolean existsByEmail(String email) {
+        return accountRepository.existsByEmail(email);
+    }
+
+    public ResultHandler sendResetPasswordMail(AccountVo accountVo) {
+        Account account = accountRepository.findByEmail(accountVo.getEmail());
+
+        account = this.resetEmailConfirmToken(account);
+
+        ResultHandler result = new ResultHandler();
+
+        MimeMessage mailMessage = mailSender.createMimeMessage();
+        try {
+            mailMessage.setSubject("[Spring Boot 게시판] 비밀번호 재설정 안내");
+            String link = APPLICATION_URL + "/auth/reset-password?email=" + account.getEmail() +
+                    "&token=" + account.getEmailConfirmToken();
+            String mailContent = "<h3>아래 링크를 통해 비밀번호를 다시 설정해주세요.</h3>\n" +
+                    "<a href='" + link + "'>" + link + "</a>";
+            mailMessage.setText(mailContent, "UTF-8", "html");
+
+            mailMessage.setFrom(EMAIL_SENDER_ADDRESS);
+            mailMessage.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(account.getEmail(), account.getNickname(), "UTF-8"));
+
+            mailSender.send(mailMessage);
+            result.setSuccess(true);
+
+        } catch (MessagingException | UnsupportedEncodingException exception) {
+            result.setSuccess(false);
+            result.setErrorMessage("메일 전송 에러");
+            return result;
+        }
+
+        return result;
+    }
+
+    public void resetPassword(AccountVo accountVo) {
+        Account account = accountRepository.findById(accountVo.getId()).orElse(null);
+        if (account == null) {
+            log.info("=======resetPassword() > account null=======");
+            return;
+        }
+
+        String encoded = passwordEncoder.encode(accountVo.getPassword());
+        account.setPassword(encoded);
+
+        accountRepository.save(account);
+    }
 }
