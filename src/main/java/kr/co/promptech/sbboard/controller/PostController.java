@@ -14,15 +14,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -35,6 +39,9 @@ public class PostController {
     private final ThumbService thumbService;
 
     private final ModelMapper modelMapper;
+
+    @Value("${upload.relative-path}")
+    private String FILE_PATH;
 
     @GetMapping("")
     public String newPost(Model model) {
@@ -69,7 +76,7 @@ public class PostController {
         Post post = postService.save(postVo, account);
 
         try {
-            fileService.save(postVo.getFiles(), post);
+            fileService.saveAll(postVo.getFiles(), post);
         } catch (Exception e) {
             return "app/post/new";
         }
@@ -113,6 +120,25 @@ public class PostController {
         return ResponseEntity.ok().body(fileDtoList);
     }
 
+    @PostMapping("/{id}/file")
+    public ResponseEntity<?> uploadFile(@PathVariable("id") Long id, @RequestPart(value = "file", required = true) MultipartFile multipartFile) {
+
+        Post post = postService.findById(id);
+        UUID uuid = UUID.randomUUID();
+
+        File file = fileService.generateFileInfo(multipartFile, post.getId(), uuid.toString());
+        fileService.uploadFile(multipartFile, file);
+
+        post.addFile(file);
+        postService.save(post);
+
+        HashMap<String, String> result = new HashMap<>();
+
+        String url = String.format("%s%s/%s", FILE_PATH, post.getId(), file.getName());
+        result.put("url", url);
+        return ResponseEntity.ok().body(result);
+    }
+
     @PutMapping("/{id}")
     public String update( @ModelAttribute("postVo") @Valid PostVo postVo,
                           BindingResult bindingResult) {
@@ -122,7 +148,11 @@ public class PostController {
 
         Post post = postService.update(postVo);
         try {
-            fileService.save(postVo.getFiles(), post);
+            log.info("String.valueOf(postVo.getFiles().size())");
+            log.info(String.valueOf(postVo.getFiles().get(0)));
+            log.info(postVo.getFiles().get(0).getName());
+            log.info(postVo.getFiles().get(1).getName());
+            fileService.saveAll(postVo.getFiles(), post);
         } catch (Exception e) {
             return "app/post/edit";
         }

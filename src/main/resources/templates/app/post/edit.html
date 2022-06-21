@@ -69,26 +69,29 @@
     <script th:src="@{/js/app/post-manager.js}"></script>
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
-            $('#summernote').summernote({
-                placeholder: '게시물 내용을 입력해주세요.',
-                tabsize: 2,
-                lang: "ko-KR",
-                height: 300,
-                callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-                    onImageUpload: function (files) {
-                        uploadSummernoteImageFile(files[0], this);
-                    },
-                    onPaste: function (e) {
-                        const clipboardData = e.originalEvent.clipboardData;
-                        if (clipboardData && clipboardData.items && clipboardData.items.length) {
-                            const item = clipboardData.items[0];
-                            if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-                                e.preventDefault();
-                            }
-                        }
-                    }
-                }
-            });
+            // $('#summernote').summernote({
+            //     placeholder: '게시물 내용을 입력해주세요.',
+            //     tabsize: 2,
+            //     lang: "ko-KR",
+            //     height: 300,
+            //     callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+            //         onImageUpload: function (files, editor, welEditable) {
+            //             // uploadSummernoteImageFile(files[0], this);
+            //             for (let i = 0; i < files.length; i++) {
+            //                 sendFile(files[i], this);
+            //             }
+            //         },
+            //         onPaste: function (e) {
+            //             const clipboardData = e.originalEvent.clipboardData;
+            //             if (clipboardData && clipboardData.items && clipboardData.items.length) {
+            //                 const item = clipboardData.items[0];
+            //                 if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+            //                     e.preventDefault();
+            //                 }
+            //             }
+            //         }
+            //     }
+            // });
 
             const postManager = new PostManager();
         })
@@ -96,38 +99,67 @@
         /**
          * 이미지 파일 업로드
          */
-        function uploadSummernoteImageFile(file, editor) {
-            const token = $("meta[name='_csrf']").attr("content");
-            const header = $("meta[name='_csrf_header']").attr("content");
-            const data = new FormData();
-            data.append("file", file);
-            $.ajax({
-                data: data,
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader(header, token);
-                },
-                type: "POST",
-                url: "/uploadSummernoteImageFile",
-                contentType: false,
-                processData: false,
-                success: function (data) {
-                    //항상 업로드된 파일의 url이 있어야 한다.
-                    $(editor).summernote('insertImage', data.url);
+        // function uploadSummernoteImageFile(file, editor) {
+        //     const token = $("meta[name='_csrf']").attr("content");
+        //     const header = $("meta[name='_csrf_header']").attr("content");
+        //     const data = new FormData();
+        //     data.append("file", file);
+        //     $.ajax({
+        //         data: data,
+        //         beforeSend: function (xhr) {
+        //             xhr.setRequestHeader(header, token);
+        //         },
+        //         type: "POST",
+        //         url: "/uploadSummernoteImageFile",
+        //         contentType: false,
+        //         processData: false,
+        //         success: function (data) {
+        //             //항상 업로드된 파일의 url이 있어야 한다.
+        //             $(editor).summernote('insertImage', data.url);
+        //
+        //             setFileInfo(data);
+        //         }
+        //     });
+        // }
+        // async function sendFile(file, el) {
+        //
+        //     // TODO 추후 manager 객체로 변환시 수정 필요
+        //     const token = document.querySelector('meta[name="_csrf"]').content;
+        //     const header = document.querySelector('meta[name="_csrf_header"]').content;
+        //
+        //     const postId = document.getElementById('post-id').value;
+        //     const form_data = new FormData();
+        //     form_data.append('file', file);
+        //
+        //     const response = await fetch(`/posts/${postId}/file`, {
+        //         method: "POST",
+        //         mode: 'cors',
+        //         headers: {
+        //             [header]: token,
+        //             // 'Content-Type': 'multipart/form-data',
+        //         },
+        //         body: form_data,
+        //     });
+        //
+        //     if (response.ok) {
+        //         const data = await response.json();
+        //         console.log(data)
+        //         $(el).summernote('insertImage', data.url);
+        //     } else {
+        //         alert(`${file.name} 파일 업로드를 실패했습니다.`)
+        //         return false;
+        //     }
+        // }
 
-                    setFileInfo(data);
-                }
-            });
-        }
-
-        function setFileInfo(info) {
-            const nameInput = document.getElementById("fileId");
-            const pathInput = document.getElementById("filePath");
-            const extInput = document.getElementById("fileExt");
-
-            nameInput.value = info.name;
-            pathInput.value = info.path;
-            extInput.value = info.ext;
-        }
+        // function setFileInfo(info) {
+        //     const nameInput = document.getElementById("fileId");
+        //     const pathInput = document.getElementById("filePath");
+        //     const extInput = document.getElementById("fileExt");
+        //
+        //     nameInput.value = info.name;
+        //     pathInput.value = info.path;
+        //     extInput.value = info.ext;
+        // }
 
 
     </script>

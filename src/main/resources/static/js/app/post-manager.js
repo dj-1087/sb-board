@@ -30,7 +30,10 @@ PostManager.prototype.initEvent = function () {
             for (const file of self.fileInput.files) {
                 self.fileList.items.add(file)
             }
+            console.log("after change: self.fileList")
             console.log(self.fileList)
+            console.log("after change: self.fileList")
+            console.log(self.fileList.files)
             self.refreshFileView();
             console.log("refreshFileView")
         });
@@ -38,8 +41,33 @@ PostManager.prototype.initEvent = function () {
         self.form.onsubmit = function (event) {
             event.preventDefault();
             self.fileInput.files = self.fileList.files;
+            console.log(self.fileInput.files)
             self.form.submit();
         }
+
+        $('#summernote').summernote({
+            placeholder: '게시물 내용을 입력해주세요.',
+            tabsize: 2,
+            lang: "ko-KR",
+            height: 300,
+            callbacks: {	//여기 부분이 이미지를 첨부하는 부분
+                onImageUpload: function (files, editor, welEditable) {
+                    // uploadSummernoteImageFile(files[0], this);
+                    for (let i = 0; i < files.length; i++) {
+                        self.uploadSummernoteImage(files[i], this);
+                    }
+                },
+                onPaste: function (e) {
+                    const clipboardData = e.originalEvent.clipboardData;
+                    if (clipboardData && clipboardData.items && clipboardData.items.length) {
+                        const item = clipboardData.items[0];
+                        if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+                            e.preventDefault();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     if (self.removePostButton) {
@@ -176,3 +204,33 @@ PostManager.prototype.removePost = async function (id) {
         },
     })
 };
+
+PostManager.prototype.uploadSummernoteImage = async function (file, el) {
+
+    // TODO 추후 manager 객체로 변환시 수정 필요
+    const token = document.querySelector('meta[name="_csrf"]').content;
+    const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+    // const postId = document.getElementById('post-id').value;
+    const form_data = new FormData();
+    form_data.append('file', file);
+
+    const response = await fetch(`/files/summernote`, {
+        method: "POST",
+        mode: 'cors',
+        headers: {
+            [header]: token,
+            // 'Content-Type': 'multipart/form-data',
+        },
+        body: form_data,
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+        $(el).summernote('insertImage', data.url);
+    } else {
+        alert(`${file.name} 파일 업로드를 실패했습니다.`)
+        return false;
+    }
+}

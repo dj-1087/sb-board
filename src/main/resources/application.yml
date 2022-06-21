@@ -65,3 +65,6 @@ logging:
     org.hibernate:
       SQL: DEBUG
       type.descriptor.sql: trace
+
+upload:
+  relative-path: /upload/

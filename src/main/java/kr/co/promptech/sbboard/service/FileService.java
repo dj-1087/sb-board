@@ -18,6 +18,7 @@ import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -34,7 +35,9 @@ public class FileService {
         return fileRepository.findById(id).orElse(null);
     }
 
-    public void save(List<MultipartFile> files, Post post) {
+    public void saveAll(List<MultipartFile> files, Post post) {
+        log.info("=======files size=======");
+        log.info(String.valueOf(files.size()));
         try {
             if (files==null || files.size() == 0) {
                 throw new Exception("ERROR : File is empty.");
@@ -42,27 +45,14 @@ public class FileService {
 
             for (int i = 0; i < files.size(); i++) {
                 MultipartFile multipartFile = files.get(i);
-                String path = String.format("%s/%s/", UPLOAD_PATH, post.getId());
-                this.initDir(path);
-
-                String originalFilename = multipartFile.getOriginalFilename();
-                if (originalFilename == null || originalFilename.equals("")) {
-                    // TODO: 추후 제대로 에러처리
+                File file = this.generateFileInfo(multipartFile, post.getId(), String.valueOf(i));
+                if (file == null) {
+                    //TODO: 추후 제대로 에러처리
+                    log.info("null file");
                     continue;
                 }
-
-                String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1];
-
-                String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + i + "." + extension;
-                File file = File.builder()
-                        .name(fileName)
-                        .originalName(originalFilename)
-                        .path(path)
-                        .ext(extension).build();
                 this.uploadFile(multipartFile, file);
-
                 post.addFile(file);
-
             }
 
             postRepository.save(post);
@@ -71,8 +61,59 @@ public class FileService {
         }
     }
 
+
+    public File generateFileInfo(MultipartFile multipartFile, Long postId, String uniqueId) {
+        String path = String.format("%s/%s/", UPLOAD_PATH, postId);
+        this.initDir(path);
+
+        String originalFilename = multipartFile.getOriginalFilename();
+        if (originalFilename == null || originalFilename.equals("")) {
+            log.info("===========originalFilename===========");
+            log.info(originalFilename);
+            // TODO: 추후 제대로 에러처리
+            return null;
+        }
+
+        String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1];
+
+        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + uniqueId + "." + extension;
+        return File.builder()
+                .name(fileName)
+                .originalName(originalFilename)
+                .path(path)
+                .ext(extension).build();
+    }
+
+    public File generateSummernoteFileInfo(MultipartFile multipartFile) {
+        String path = String.format("%s/summernote/", UPLOAD_PATH);
+        this.initDir(path);
+
+        String originalFilename = multipartFile.getOriginalFilename();
+        if (originalFilename == null || originalFilename.equals("")) {
+            log.info("===========originalFilename===========");
+            log.info(originalFilename);
+            // TODO: 추후 제대로 에러처리
+            return null;
+        }
+
+        String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1];
+        UUID uniqueId = UUID.randomUUID();
+
+        String fileName = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + "_" + uniqueId + "." + extension;
+        return File.builder()
+                .name(fileName)
+                .originalName(originalFilename)
+                .path(path)
+                .ext(extension).build();
+    }
+
     public void uploadFile(MultipartFile multipartFile, File file) {
         try {
+            log.info("=====file path=====");
+            log.info(file.getPath());
+            log.info("=====file name=====");
+            log.info(file.getName());
+
             Files.copy(multipartFile.getInputStream(), Paths.get(file.getPath() + file.getName()), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();

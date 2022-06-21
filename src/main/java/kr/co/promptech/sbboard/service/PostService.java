@@ -36,6 +36,10 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    public void save(Post post) {
+        postRepository.save(post);
+    }
+
     public Post update(PostVo postVo) {
 
         Post post = postRepository.findById(postVo.getId()).orElse(null);
