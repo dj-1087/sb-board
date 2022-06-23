@@ -1,9 +1,7 @@
 # [SB-Board]
 > Spring Boot 게시판  
 
-<img src="./doc/home_image.png" alt="홈 이미지" height="100"/>
-
-<img src="./doc/post_image.png" alt="게시물 이미지" height="100"/>
+<img src="./doc/home_image.png" alt="홈 이미지" height="300"/> <img src="./doc/post_image.png" alt="게시물 이미지" height="300"/>
 
 ## Environment
 * Java 11
