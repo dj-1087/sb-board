@@ -1,10 +1,14 @@
 # [SB-Board]
-> Spring Boot 게시판
+> Spring Boot 게시판  
+
+<img src="./doc/home_image.png" alt="홈 이미지" height="100"/>
+
+<img src="./doc/post_image.png" alt="게시물 이미지" height="100"/>
 
 ## Environment
 * Java 11
 * SprinBoot 2.6.7
-* Mysql
+* Mysql 8.0
 * Spring-Data-JPA
 
 
