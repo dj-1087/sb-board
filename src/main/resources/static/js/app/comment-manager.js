@@ -17,7 +17,6 @@ const CommentManager = function () {
     this.loadData().then(() => this.refreshView());
 }
 CommentManager.prototype.initEvent = function () {
-    console.log("=======init=======")
     const self = this;
 
     self.saveButton.onclick = function (event) {
@@ -36,18 +35,9 @@ CommentManager.prototype.resetForm = function () {
 CommentManager.prototype.saveComment = async function () {
 
     const self = this;
-    console.log("self 값")
-    console.log(self)
-
-    console.log("token 값")
-    console.log(self.token)
-
     const form = document.getElementById("comment-form");
     const data = self.getFormObject(form);
     data["postId"] = self.postId;
-
-    console.log("data 값")
-    console.log(JSON.stringify(data))
 
     const response = await fetch("/comments", {
         method: "POST",
@@ -61,9 +51,6 @@ CommentManager.prototype.saveComment = async function () {
 
     const comment = await response.json();
 
-    console.log("response data")
-    console.log(comment)
-
     const datetime = comment.createdAt
     comment.createdAt = self.formatToDate(datetime);
 
@@ -71,8 +58,6 @@ CommentManager.prototype.saveComment = async function () {
 }
 
 CommentManager.prototype.refreshView = function () {
-    console.log("=========comment list=========")
-    console.log(this.commentList)
     const self = this
 
     self.commentSection.innerHTML = "";
@@ -122,8 +107,6 @@ CommentManager.prototype.getFormObject = function (formElement) {
 }
 
 CommentManager.prototype.formatToDate = function (datetime) {
-    console.log("datetime")
-    console.log(datetime)
     moment.locale('ko');
     return moment(datetime).format("LL");
 };
@@ -142,25 +125,17 @@ CommentManager.prototype.loadCommentList = async function () {
         comment.createdAt = self.formatToDate(comment.createdAt);
         return comment
     });
-    console.log("data loaded")
-    console.log(self.commentList)
-
 };
 
 CommentManager.prototype.loadUser = async function () {
-    console.log("====== load user ======")
-
     const self = this;
     const response = await fetch("/auth/session", {method:'GET', mode:'cors'});
     self.user = await response.json();
-    console.log("user info")
-    console.log(self.user)
 };
 
 CommentManager.prototype.loadData = function () {
     const self = this;
 
-    console.log("====== load data ======")
     return Promise.all([self.loadCommentList(), self.loadUser()]);
 };
 

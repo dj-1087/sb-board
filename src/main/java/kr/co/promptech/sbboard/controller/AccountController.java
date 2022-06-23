@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
@@ -152,8 +151,6 @@ public class AccountController {
 
     @PostMapping("/reset-password-mail")
     public String sendResetPasswordMail(@ModelAttribute("accountVo") AccountVo accountVo, Model model) {
-        log.info("======================");
-        log.info(accountVo.getEmail());
         if (!accountService.existsByEmail(accountVo.getEmail())) {
             model.addAttribute("errorMessage", "해당 이메일로 가입한 계정이 없습니다.");
             return "app/auth/reset-password";

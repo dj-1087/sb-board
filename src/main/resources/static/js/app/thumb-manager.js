@@ -8,9 +8,6 @@ const ThumbManager = function () {
     this.userClicked = document.getElementById("user-clicked").value;
 
     this.initEvent();
-    console.log('user clicked(type boolean): ', this.userClicked === true)
-    console.log('user clicked(type string): ', this.userClicked === 'true')
-    console.log('thumbs count: ', this.thumbsCount)
 };
 
 ThumbManager.prototype.initEvent = function () {
@@ -33,16 +30,12 @@ ThumbManager.prototype.thumbsUp = async function () {
             [self.header]: self.token,
         }
     });
-    console.log("======thumbs up result======")
     if (response.status === 400) {
-        console.log("======thumbs up error======")
         const error = await response.json();
-        console.log(error)
         alert(error.errorMessage);
         return false;
     }
     const postThumbDto = await response.json();
-    console.log(postThumbDto)
     self.thumbsCount = postThumbDto.postThumbCount;
     self.userClicked = postThumbDto.userClicked;
 };

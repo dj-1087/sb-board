@@ -26,22 +26,15 @@ PostManager.prototype.initEvent = function () {
 
     if (self.form) {
         self.fileInput.addEventListener('change', function () {
-            console.log("changed")
             for (const file of self.fileInput.files) {
                 self.fileList.items.add(file)
             }
-            console.log("after change: self.fileList")
-            console.log(self.fileList)
-            console.log("after change: self.fileList")
-            console.log(self.fileList.files)
             self.refreshFileView();
-            console.log("refreshFileView")
         });
 
         self.form.onsubmit = function (event) {
             event.preventDefault();
             self.fileInput.files = self.fileList.files;
-            console.log(self.fileInput.files)
             self.form.submit();
         }
 
@@ -73,7 +66,6 @@ PostManager.prototype.initEvent = function () {
     if (self.removePostButton) {
         self.removePostButton.addEventListener("click", function (event) {
             event.preventDefault();
-            console.log("remove ")
             self.removePost(this.dataset.id).then(() => {
                 location.href = "/"
             }).catch((error) => {
@@ -90,10 +82,8 @@ PostManager.prototype.resetFileInput = function () {
 
 PostManager.prototype.refreshFileView = function () {
     const self = this;
-    console.log(self)
 
     self.fileInfoSection.innerHTML = "";
-    console.log(self.fileList.files)
 
     for (const fileInfo of self.fileInfoList) {
         const fileInfoView = self.fileShowTemplate({
@@ -106,9 +96,7 @@ PostManager.prototype.refreshFileView = function () {
     }
 
     for (let i = 0; i < self.fileList.files.length; i++) {
-        console.log("idx", i)
         const fileInfo = self.fileList.files[i];
-        console.log(fileInfo.name)
 
         const fileInfoView = self.fileShowTemplate({
             seq: i,
@@ -150,17 +138,12 @@ PostManager.prototype.getDownloadHref = function (seq) {
     const self = this;
 
     const fileInfo = self.fileList.files[seq];
-    console.log("fileInfo")
-    console.log(fileInfo)
     const blob = new Blob([fileInfo], {type: fileInfo.type});
-    console.log(blob)
     return URL.createObjectURL(blob)
 };
 
 PostManager.prototype.loadFileList = async function () {
-    console.log("loading file list")
     const self = this;
-    console.log("postId: ",self.postId)
 
     if (!self.postId) {
         return false
@@ -172,11 +155,7 @@ PostManager.prototype.loadFileList = async function () {
             return false
         });
 
-    console.log(response)
     self.fileInfoList = await response.json();
-
-    console.log("data loaded")
-    console.log(self.fileInfoList)
 };
 
 PostManager.prototype.removeFile = async function (id) {
@@ -227,7 +206,6 @@ PostManager.prototype.uploadSummernoteImage = async function (file, el) {
 
     if (response.ok) {
         const data = await response.json();
-        console.log(data)
         $(el).summernote('insertImage', data.url);
     } else {
         alert(`${file.name} 파일 업로드를 실패했습니다.`)

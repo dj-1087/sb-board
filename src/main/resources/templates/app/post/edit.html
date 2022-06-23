@@ -6,62 +6,9 @@
 
     <h1>게시물 수정</h1>
     <hr>
-<!--    <form id="post-form" enctype="multipart/form-data" th:action="@{/posts/{id}(id=${postVo.id})}" method="POST" th:object="${postVo}">-->
-<!--        <input type="hidden" name="_method" value="PUT">-->
-
-<!--        <div class="row mb-3">-->
-<!--            <label for="title" class="col-sm-1 col-form-label text-nowrap">제목</label>-->
-<!--            <div class="col-sm-11">-->
-<!--                <input type="text" class="form-control bg-white" id="title" th:field="*{title}">-->
-<!--                <small class="form-text text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">제목을-->
-<!--                    입력해주세요</small>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div class="row mb-3">-->
-<!--            <label for="summernote" class="col-sm-1 col-form-label text-nowrap">내용</label>-->
-<!--            <div class="col-sm-11">-->
-<!--                <textarea class="form-control bg-white shadow" id="summernote" th:field="*{content}"></textarea>-->
-<!--                <small class="form-text text-danger" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">내용을-->
-<!--                    입력해주세요</small>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="row mb-3">-->
-<!--            <label for="files" class="col-sm-1 col-form-label text-nowrap">첨부 파일</label>-->
-<!--            <div class="col-sm-11">-->
-<!--                <input type="file" id="files" th:field="*{files}" multiple-->
-<!--                       class="form-control bg-white mb-3">-->
-<!--                <div id="file-info-section" class="mb-3">-->
-<!--                    <div th:each="file : ${postVo.fileSet}"-->
-<!--                         class="bg-white shadow py-2 px-1 mb-2 mx-2">-->
-<!--                        <i class="bi bi-folder2-open mx-3"></i>-->
-<!--                        <span th:text="${file.originalName}" class="align-middle" style="font-size: 0.9rem"></span>-->
-<!--                        <div class="float-end">-->
-<!--                            <a th:href="@{'/files/'+${file.id}}" class="download-btn"-->
-<!--                               th:download="${file.originalName}">-->
-<!--                                <i class="bi bi-download"></i>-->
-<!--                            </a>-->
-<!--                            <div class="vr mx-2"></div>-->
-<!--                            <a href="#" th:data-id="${file.id}" th:data-isnew="false" class="remove-file-btn me-3">-->
-<!--                                <i class="bi bi-x-lg text-secondary"></i>-->
-<!--                            </a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-
-<!--        <div class="mt-3 d-flex justify-content-between">-->
-<!--            <a th:href="@{/}" class="btn btn-secondary"><- 홈으로</a>-->
-<!--            <button type="submit" class="btn btn-outline-success update-btn">수정</button>-->
-<!--        </div>-->
-<!--    </form>-->
 
     <input id="post-id" type="hidden" th:value="${postVo.id}">
     <form th:replace="app/post/_form :: _form"></form>
-
-
 
 </div>
 <th:block layout:fragment="script">
@@ -69,98 +16,8 @@
     <script th:src="@{/js/app/post-manager.js}"></script>
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
-            // $('#summernote').summernote({
-            //     placeholder: '게시물 내용을 입력해주세요.',
-            //     tabsize: 2,
-            //     lang: "ko-KR",
-            //     height: 300,
-            //     callbacks: {	//여기 부분이 이미지를 첨부하는 부분
-            //         onImageUpload: function (files, editor, welEditable) {
-            //             // uploadSummernoteImageFile(files[0], this);
-            //             for (let i = 0; i < files.length; i++) {
-            //                 sendFile(files[i], this);
-            //             }
-            //         },
-            //         onPaste: function (e) {
-            //             const clipboardData = e.originalEvent.clipboardData;
-            //             if (clipboardData && clipboardData.items && clipboardData.items.length) {
-            //                 const item = clipboardData.items[0];
-            //                 if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
-            //                     e.preventDefault();
-            //                 }
-            //             }
-            //         }
-            //     }
-            // });
-
-            const postManager = new PostManager();
+            new PostManager();
         })
-
-        /**
-         * 이미지 파일 업로드
-         */
-        // function uploadSummernoteImageFile(file, editor) {
-        //     const token = $("meta[name='_csrf']").attr("content");
-        //     const header = $("meta[name='_csrf_header']").attr("content");
-        //     const data = new FormData();
-        //     data.append("file", file);
-        //     $.ajax({
-        //         data: data,
-        //         beforeSend: function (xhr) {
-        //             xhr.setRequestHeader(header, token);
-        //         },
-        //         type: "POST",
-        //         url: "/uploadSummernoteImageFile",
-        //         contentType: false,
-        //         processData: false,
-        //         success: function (data) {
-        //             //항상 업로드된 파일의 url이 있어야 한다.
-        //             $(editor).summernote('insertImage', data.url);
-        //
-        //             setFileInfo(data);
-        //         }
-        //     });
-        // }
-        // async function sendFile(file, el) {
-        //
-        //     // TODO 추후 manager 객체로 변환시 수정 필요
-        //     const token = document.querySelector('meta[name="_csrf"]').content;
-        //     const header = document.querySelector('meta[name="_csrf_header"]').content;
-        //
-        //     const postId = document.getElementById('post-id').value;
-        //     const form_data = new FormData();
-        //     form_data.append('file', file);
-        //
-        //     const response = await fetch(`/posts/${postId}/file`, {
-        //         method: "POST",
-        //         mode: 'cors',
-        //         headers: {
-        //             [header]: token,
-        //             // 'Content-Type': 'multipart/form-data',
-        //         },
-        //         body: form_data,
-        //     });
-        //
-        //     if (response.ok) {
-        //         const data = await response.json();
-        //         console.log(data)
-        //         $(el).summernote('insertImage', data.url);
-        //     } else {
-        //         alert(`${file.name} 파일 업로드를 실패했습니다.`)
-        //         return false;
-        //     }
-        // }
-
-        // function setFileInfo(info) {
-        //     const nameInput = document.getElementById("fileId");
-        //     const pathInput = document.getElementById("filePath");
-        //     const extInput = document.getElementById("fileExt");
-        //
-        //     nameInput.value = info.name;
-        //     pathInput.value = info.path;
-        //     extInput.value = info.ext;
-        // }
-
 
     </script>
 </th:block>

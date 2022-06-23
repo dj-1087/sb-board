@@ -109,6 +109,7 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
+    // TODO: getfiles 이름 변경
     @GetMapping("/{id}/files")
     public ResponseEntity<?> getFiles(@PathVariable("id") Long id) {
         Post post = postService.findById(id);
@@ -148,10 +149,6 @@ public class PostController {
 
         Post post = postService.update(postVo);
         try {
-            log.info("String.valueOf(postVo.getFiles().size())");
-            log.info(String.valueOf(postVo.getFiles().get(0)));
-            log.info(postVo.getFiles().get(0).getName());
-            log.info(postVo.getFiles().get(1).getName());
             fileService.saveAll(postVo.getFiles(), post);
         } catch (Exception e) {
             return "app/post/edit";

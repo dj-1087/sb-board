@@ -21,7 +21,6 @@ SignUpManager.prototype.addPasswordCheckTrueEvent = function () {
             errorSpan.classList.add('d-none')
             helpSpan.classList.remove('d-none')
         } else {
-            console.log("not match")
             errorSpan.classList.remove('d-none');
             helpSpan.classList.add('d-none')
         }
@@ -30,12 +29,10 @@ SignUpManager.prototype.addPasswordCheckTrueEvent = function () {
 
 SignUpManager.prototype.addCheckValidityEvent = function () {
     const self = this;
-    console.log("add validity")
     if (!self.form) {
         return false
     }
     self.form.addEventListener('submit', function(event) {
-        console.log('do submit event')
         if (!this.checkValidity() || !self.passwordCheckTrue()) {
             event.preventDefault();
             event.stopPropagation();
@@ -43,16 +40,13 @@ SignUpManager.prototype.addCheckValidityEvent = function () {
 
         this.classList.add('was-validated');
     }, false)
-    console.log("added")
 }
 
 SignUpManager.prototype.passwordCheckTrue = function () {
     const passwordValue = document.getElementById("password").value;
     const passwordCheckValue = document.getElementById("password-check").value;
 
-    if (passwordValue === passwordCheckValue) {
-        return true;
-    }
+    return passwordValue === passwordCheckValue;
 
-    return false;
+
 };

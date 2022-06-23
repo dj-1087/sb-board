@@ -3,8 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-    <!--    <h1>회원가입</h1>-->
-    <!--    <hr>-->
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-6">
@@ -22,11 +20,6 @@
                             <a th:href="@{/}" class="btn btn-secondary">홈으로 가기</a>
                             <a th:href="@{/auth/login}" class="btn btn-primary">로그인 하기</a>
                         </div>
-                        <!--                        <div class="d-grid gap-2 mx-auto">-->
-                        <!--                            <a th:unless="${errorMessage}" class="btn btn-primary">비밀번호 찾기</a>-->
-                        <!--                            <a th:if="${errorMessage}" class="btn btn-primary">이메일 찾기</a>-->
-                        <!--                            <a th:href="@{/auth/login}" class="btn btn-secondary">로그인</a>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>

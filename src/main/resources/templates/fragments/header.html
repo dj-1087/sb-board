@@ -27,7 +27,6 @@
             <th:block sec:authorize="isAnonymous()">
                 <div class="text-end">
                     <a th:href="@{/auth/login}" class="btn btn-outline-light me-2">로그인</a>
-<!--                    <a th:href="@{/auth/sign-up}" class="btn btn-warning">회원가입</a>-->
                 </div>
             </th:block>
             <th:block sec:authorize="isAuthenticated()" >
