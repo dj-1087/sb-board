@@ -100,10 +100,6 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-//    public String delete(@PathVariable("id") Long id) {
-//        postService.delete(id);
-//        return "redirect:/";
-//    }
     public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         postService.delete(id);
         return ResponseEntity.ok().build();
@@ -111,7 +107,7 @@ public class PostController {
 
     // TODO: getfiles 이름 변경
     @GetMapping("/{id}/files")
-    public ResponseEntity<?> getFiles(@PathVariable("id") Long id) {
+    public ResponseEntity<?> files(@PathVariable("id") Long id) {
         Post post = postService.findById(id);
         List<File> fileList = new ArrayList<>(post.getFileSet());
         List<FileDto> fileDtoList = modelMapper.map(fileList,
