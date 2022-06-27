@@ -105,7 +105,6 @@ public class PostController {
         return ResponseEntity.ok().build();
     }
 
-    // TODO: getfiles 이름 변경
     @GetMapping("/{id}/files")
     public ResponseEntity<?> files(@PathVariable("id") Long id) {
         Post post = postService.findById(id);

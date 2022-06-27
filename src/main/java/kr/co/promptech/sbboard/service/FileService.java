@@ -39,7 +39,7 @@ public class FileService {
         log.info("=======files size=======");
         log.info(String.valueOf(files.size()));
         try {
-            if (files==null || files.size() == 0) {
+            if (files.size() == 0) {
                 throw new Exception("ERROR : File is empty.");
             }
 
@@ -68,7 +68,7 @@ public class FileService {
 
         String originalFilename = multipartFile.getOriginalFilename();
         if (originalFilename == null || originalFilename.equals("")) {
-            log.info("===========originalFilename===========");
+            log.info("===========generateFileInfo: no originalFilename===========");
             log.info(originalFilename);
             // TODO: 추후 제대로 에러처리
             return null;
@@ -90,7 +90,7 @@ public class FileService {
 
         String originalFilename = multipartFile.getOriginalFilename();
         if (originalFilename == null || originalFilename.equals("")) {
-            log.info("===========originalFilename===========");
+            log.info("===========generateSummernoteFileInfo: no originalFilename===========");
             log.info(originalFilename);
             // TODO: 추후 제대로 에러처리
             return null;
