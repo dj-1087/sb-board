@@ -17,6 +17,10 @@ public class AccountAdapter extends User {
         super(account.getNickname(), account.getPassword(), authorities(account));
         this.account = account;
     }
+    public AccountAdapter(Account account, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked) {
+        super(account.getNickname(), account.getPassword(), enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities(account));
+        this.account = account;
+    }
 
     private static Collection<? extends GrantedAuthority> authorities(Account account)  {
         Set<GrantedAuthority> roles = new HashSet<>();
