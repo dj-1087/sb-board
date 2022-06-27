@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="#" th:href="@{/css/app.css}" />
+
+    <title>500 - Internal Server Error</title>
+
+    <style>
+        .error-code-div {
+            font-size: 10rem;
+            font-weight: 900;
+            letter-spacing: -1rem;
+            color: #e91b23;
+            text-align: center;
+        }
+
+        .error-code-div .error-code-span {
+            text-shadow: -8px 0px 0px #000;
+        }
+        .error-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+        }
+        .error-content {
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container vh-100">
+        <div class="error-code-div">
+            <span class="error-code-span">5</span>
+            <span class="error-code-span">0</span>
+            <span class="error-code-span">0</span>
+        </div>
+        <div class="error-title mb-3">
+            서비스에 접속할 수 없습니다.</div>
+        <div class="error-content mb-3">
+            죄송합니다, 서버 문제로 인해 일시적으로 서비스에 접속할 수 없습니다.<br />
+            잠시 후 다시 이용 부탁드리며,
+            이용에 불편을 드려 사과드립니다.<br />
+        </div>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/}" class="btn btn-outline-secondary px-3">홈으로 이동</a>
+        </div>
+    </div>
+</body>
+</html>
