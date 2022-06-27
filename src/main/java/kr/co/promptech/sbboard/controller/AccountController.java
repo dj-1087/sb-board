@@ -92,6 +92,7 @@ public class AccountController {
         return "app/auth/authenticate";
     }
 
+    //TODO: 로직수정
     @GetMapping("/email-token/resend")
     public ResponseEntity<?> resendConfirmationMail(@CurrentUser Account account) {
         account = accountService.resetEmailConfirmToken(account);

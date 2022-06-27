@@ -16,8 +16,8 @@
                         <div th:if="${error}"  class="alert text-center"
                              th:classappend="${#strings.equals(errorType, 'emailNotConfirmed')} ? 'alert-warning' : 'alert-danger'" role="alert">
 
-                            <small th:utext="${#strings.replace(exception, newLineChar, '&lt;br /&gt;')}" class="mb-3 d-block" >로그인 실패</small>
-                            <button th:if="${#strings.equals(errorType, 'emailNotConfirmed')}" id="resend-confirm-mail-btn" class="btn btn-sm btn-secondary">인증메일 재전송</button>
+                            <small th:utext="${#strings.replace(exception, newLineChar, '&lt;br /&gt;')}" class="d-block" >로그인 실패</small>
+                            <button th:if="${#strings.equals(errorType, 'emailNotConfirmed')}" id="resend-confirm-mail-btn" class="mt-3 btn btn-sm btn-secondary">인증메일 재전송</button>
                         </div>
 
 
@@ -56,4 +56,22 @@
         </div>
     </div>
 </div>
+<script type="application/javascript" layout:fragment="script">
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const resendConfirmMailButton = document.getElementById("resend-confirm-mail-btn");
+        resendConfirmMailButton.addEventListener("click", async function () {
+            const response = await fetch("/auth/email-token/resend");
+            if (response.status === 500) {
+                const error = await response.json();
+                console.log(error)
+                alert(error.errorMessage);
+                return false;
+            }
+
+            alert("가입하신 메일로 인증키를 재전송 완료했습니다.")
+        });
+    });
+
+</script>
 </body>

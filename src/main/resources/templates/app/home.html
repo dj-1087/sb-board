@@ -57,19 +57,6 @@
         for (const row of rows) {
             row.addEventListener('click', handlePostClick)
         }
-
-        const resendConfirmMailButton = document.getElementById("resend-confirm-mail-btn");
-        resendConfirmMailButton.addEventListener("click", async function () {
-            const response = await fetch("/auth/email-token/resend");
-            if (response.status === 500) {
-                const error = await response.json();
-                console.log(error)
-                alert(error.errorMessage);
-                return false;
-            }
-
-            alert("가입하신 메일로 인증키를 재전송 완료했습니다.")
-        });
     });
 
     function handlePostClick() {
