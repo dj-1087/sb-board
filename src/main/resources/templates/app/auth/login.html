@@ -11,11 +11,15 @@
                 <div class="card shadow-2-strong" style="border-radius: 1rem;">
                     <div class="card-body px-5 pt-5 pb-4">
 
-                        <h3 class="mb-5 text-center">로그인</h3>
+                        <h3 class="text-center" th:classappend="${error} ? 'mb-3' : 'mb-5'">로그인</h3>
 
-                        <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                            이메일 또는 비밀번호 정보가 올바르지 않습니다.
+                        <div th:if="${error}"  class="alert text-center"
+                             th:classappend="${#strings.equals(errorType, 'emailNotConfirmed')} ? 'alert-warning' : 'alert-danger'" role="alert">
+
+                            <small th:utext="${#strings.replace(exception, newLineChar, '&lt;br /&gt;')}" class="mb-3 d-block" >로그인 실패</small>
+                            <button th:if="${#strings.equals(errorType, 'emailNotConfirmed')}" id="resend-confirm-mail-btn" class="btn btn-sm btn-secondary">인증메일 재전송</button>
                         </div>
+
 
                         <form id="signup-form" th:action="@{/auth/login}" method="POST">
 
