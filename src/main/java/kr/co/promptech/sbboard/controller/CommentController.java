@@ -47,7 +47,11 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> edit(@PathVariable("id") Long id, @RequestBody CommentVo commentVo) {
+    public ResponseEntity<?> edit(@PathVariable("id") Long id, @CurrentUser Account account, @RequestBody CommentVo commentVo) {
+        if (!commentService.checkIsWriter(id, account)) {
+            return ResponseEntity.badRequest().build();
+        }
+
         ResultHandler result = commentService.update(id, commentVo);
         if (result.isSuccess()) {
             return ResponseEntity.ok().build();

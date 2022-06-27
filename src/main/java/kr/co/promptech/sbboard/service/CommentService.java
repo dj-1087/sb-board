@@ -56,4 +56,8 @@ public class CommentService {
         result.setSuccess(true);
         return result;
     }
+
+    public boolean checkIsWriter(Long commentId, Account account) {
+        return commentRepository.existsByIdAndAccount(commentId, account);
+    }
 }

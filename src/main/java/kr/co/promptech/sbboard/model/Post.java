@@ -6,10 +6,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Entity
@@ -50,5 +47,9 @@ public class Post extends BaseTimeEntity {
         }
         file.setPost(this);
         this.fileSet.add(file);
+    }
+
+    public boolean isWriter(Account account) {
+        return Objects.equals(this.account.getId(), account.getId());
     }
 }
