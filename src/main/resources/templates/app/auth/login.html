@@ -17,7 +17,39 @@
                              th:classappend="${#strings.equals(errorType, 'emailNotConfirmed')} ? 'alert-warning' : 'alert-danger'" role="alert">
 
                             <small th:utext="${#strings.replace(exception, newLineChar, '&lt;br /&gt;')}" class="d-block" >로그인 실패</small>
-                            <button th:if="${#strings.equals(errorType, 'emailNotConfirmed')}" id="resend-confirm-mail-btn" class="mt-3 btn btn-sm btn-secondary">인증메일 재전송</button>
+
+                            <button th:if="${#strings.equals(errorType, 'emailNotConfirmed')}" id="resend-mail-modal-btn" class="mt-3 btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#resend-mail-modal">인증메일 재전송</button>
+                            <div class="modal fade" id="resend-mail-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resend-mail-modal-label" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="resend-mail-modal-label">인증메일 재전송</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form id="resend-mail-form" th:action="@{/auth/email-token/resend}" method="post">
+                                                <div class="row mb-3">
+                                                    <label for="resend-email" class="col-sm-2 col-form-label text-nowrap">이메일</label>
+                                                    <div class="col-sm-10">
+                                                        <input id="resend-email" type="email" name="resend-email" class="form-control"
+                                                               placeholder="mail@example.com" required>
+                                                        <small class="invalid-feedback">이메일을 입력해주세요.</small>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary close-modal-btn" data-bs-dismiss="modal">닫기</button>
+                                            <button id="resend-mail-btn" type="button" class="btn btn-primary loading-btn">
+                                                <span class="before-loading">전송</span>
+                                                <span class="visually-hidden loading">
+                                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>&nbsp;전송중...
+                                                </span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -59,19 +91,56 @@
 <script type="application/javascript" layout:fragment="script">
 
     document.addEventListener("DOMContentLoaded", () => {
-        const resendConfirmMailButton = document.getElementById("resend-confirm-mail-btn");
-        resendConfirmMailButton.addEventListener("click", async function () {
-            const response = await fetch("/auth/email-token/resend");
-            if (response.status === 500) {
-                const error = await response.json();
-                console.log(error)
-                alert(error.errorMessage);
-                return false;
-            }
+        const resendMailButton = document.getElementById("resend-mail-btn");
+        resendMailButton.addEventListener("click", async function () {
+            startLoading(this)
 
-            alert("가입하신 메일로 인증키를 재전송 완료했습니다.")
+            const token = document.querySelector('meta[name="_csrf"]').content;
+            const header = document.querySelector('meta[name="_csrf_header"]').content;
+
+            const email = document.getElementById("resend-email").value;
+            const query = `?email=${email}`
+
+            const response = await fetch("/auth/email-token/resend"+query, {
+                method: "GET",
+                mode: 'cors',
+                headers: {
+                    [header]: token,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                alert("가입하신 메일로 인증키를 재전송 완료했습니다.");
+
+                const closeButton = document.querySelector("#resend-mail-modal .close-modal-btn")
+                closeButton.click()
+
+                endLoading(this)
+
+            }else {
+                const error = await response.json();
+                alert(error.errorMessage);
+
+                endLoading(this)
+            }
         });
+
     });
+
+    function startLoading(targetElement) {
+        const beforeLoading = targetElement.querySelector('.before-loading');
+        const loadingElement = targetElement.querySelector('.loading');
+        beforeLoading.classList.add('visually-hidden')
+        loadingElement.classList.remove('visually-hidden')
+    }
+
+    function endLoading(targetElement) {
+        const beforeLoading = targetElement.querySelector('.before-loading');
+        const loadingElement = targetElement.querySelector('.loading');
+        beforeLoading.classList.remove('visually-hidden')
+        loadingElement.classList.add('visually-hidden')
+    }
 
 </script>
 </body>

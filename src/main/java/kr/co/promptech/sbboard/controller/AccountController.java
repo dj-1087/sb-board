@@ -94,10 +94,19 @@ public class AccountController {
 
     //TODO: 로직수정
     @GetMapping("/email-token/resend")
-    public ResponseEntity<?> resendConfirmationMail(@CurrentUser Account account) {
+    public ResponseEntity<?> resendConfirmationMail(@RequestParam String email) {
+        Account account = accountService.findByEmail(email);
+        ResultHandler result;
+        if (account == null) {
+            result = new ResultHandler();
+            result.setSuccess(false);
+            result.setErrorMessage("해당 메일로 가입된 계정이 없습니다.");
+            return ResponseEntity.badRequest().body(result);
+        }
+
         account = accountService.resetEmailConfirmToken(account);
 
-        ResultHandler result = accountService.sendConfirmationMail(account);
+        result = accountService.sendConfirmationMail(account);
         if (result.isSuccess()) {
             return ResponseEntity.ok().build();
         }
