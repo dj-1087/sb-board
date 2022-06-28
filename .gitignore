@@ -52,3 +52,9 @@ build/
 
 ### upload ###
 /upload
+
+### cache ###
+.sass-cache
+
+### etc ###
+.ruby-version
