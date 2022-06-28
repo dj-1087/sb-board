@@ -36,8 +36,6 @@ public class FileService {
     }
 
     public void saveAll(List<MultipartFile> files, Post post) {
-        log.info("=======files size=======");
-        log.info(String.valueOf(files.size()));
         try {
             if (files.size() == 0) {
                 throw new Exception("ERROR : File is empty.");
@@ -109,11 +107,6 @@ public class FileService {
 
     public void uploadFile(MultipartFile multipartFile, File file) {
         try {
-            log.info("=====file path=====");
-            log.info(file.getPath());
-            log.info("=====file name=====");
-            log.info(file.getName());
-
             Files.copy(multipartFile.getInputStream(), Paths.get(file.getPath() + file.getName()), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
             e.printStackTrace();

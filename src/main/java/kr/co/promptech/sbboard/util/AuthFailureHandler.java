@@ -22,9 +22,6 @@ import java.nio.charset.StandardCharsets;
 public class AuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        log.info("=========onAuthenticationFailure=========");
-        log.info(exception.getClass().getName());
-
         String errorMessage;
         String errorType = "";
         if (exception instanceof BadCredentialsException) {
