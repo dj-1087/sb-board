@@ -104,13 +104,12 @@
     </div>
 </div>
 <th:block layout:fragment="script">
-    <script th:src="@{/js/utils/loading-handler.js}"></script>
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
             const loadingHandler = new LoadingHandler();
 
             const resendMailButton = document.getElementById("resend-mail-btn");
-            resendMailButton.addEventListener("click", async function () {
+            resendMailButton?.addEventListener("click", async function () {
                 loadingHandler.startButtonLoading(this);
 
                 const token = document.querySelector('meta[name="_csrf"]').content;
