@@ -1,0 +1,23 @@
+<table id="posts-table" th:fragment="_table"
+       class="table table-hover mb-5 bg-white shadow">
+    <thead>
+    <tr>
+        <th scope="col" style="width: 10%">No</th>
+        <th scope="col" style="width: 50%">제목</th>
+        <th scope="col" style="width: 20%">작성자</th>
+        <th scope="col" style="width: 20%">작성일</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${#lists.size(posts) == 0}">
+        <td colspan="4" class="align-middle text-center" style="height: 30vh">게시물이 없습니다.</td>
+    </tr>
+    <tr th:each="post, iter : ${posts}" th:attr="data-post-id=${post.id}"
+        class="clickable" role="link" style="cursor: pointer">
+        <th th:text="${totalCount - pagination.perPage*(pagination.current - 1) - iter.index}">1</th>
+        <td th:text="${post.title}" class="text-start">title</td>
+        <td th:text="${post.account.nickname}">nickname</td>
+        <td th:text="${#dates.format(post.createdAt, 'yyyy.MM.dd.')}">createdAt</td>
+    </tr>
+    </tbody>
+</table>
