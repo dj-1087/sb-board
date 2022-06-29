@@ -1,6 +1,5 @@
 package kr.co.promptech.sbboard.model.helper;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.Page;

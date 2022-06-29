@@ -12,7 +12,6 @@ class ResetPasswordManager {
     initEventListener() {
         console.log("init event listener")
         const self = this;
-        // self.loadingHandler = new LoadingHandler();
 
         self.resetPasswordForm = document.getElementById('reset-password-form')
         if (self.resetPasswordForm) {

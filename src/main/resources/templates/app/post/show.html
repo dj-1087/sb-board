@@ -4,8 +4,6 @@
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
     <input id="post-id" type="hidden" th:value="${post.id}">
-    <!--    <div th:text="${post.title}" class="h1 d-flex justify-content-between">title</div>-->
-
     <h1 class="pt-5">
         <span th:text="${post.title}"></span>
         <span class="dropdown float-end" th:if="${account.isAdmin() or account.id == post.account.id}">
@@ -22,9 +20,6 @@
     <hr>
     <div class="px-3 my-5">
         <div th:utext="${post.content}" class="mb-5">content</div>
-        <!--        <div th:if="${post.file != null}">-->
-        <!--            <img src="/" th:src="@{/upload/{fileName}(fileName = ${post.file.name})}" width="500px" alt="이미지">-->
-        <!--        </div>-->
         <div id="file-div" th:if="${!post.fileSet.isEmpty()}">
             <div th:each="file : ${post.fileSet}"
                  class="bg-white shadow py-2 px-1 mb-2 mx-2">
@@ -70,44 +65,11 @@
     <script th:src="@{/js/app/thumb-manager.js}"></script>
     <script type="application/javascript">
         document.addEventListener("DOMContentLoaded", () => {
-            console.log("=======load=======")
-            const postManager = new PostManager();
-            const commentManager = new CommentManager();
-            const thumbManger = new ThumbManager();
+            new PostManager();
+            new CommentManager();
+            new ThumbManager();
         })
-        // window.addEventListener('load', () => {
-        //     // const CommentManager = new CommentManager();
-        // })
-        // async function checkResponseOnDownload(id) {
-        //     const response = await fetch("/files/" + id, { method: "GET", mode: 'cors' })
-        //         .catch((error) => {
-        //             alert(error)
-        //             return false
-        //         });
-        //
-        //     let blob = await response.blob();
-        //
-        //     console.log("check response data")
-        //     // const test = new Blob();
-        //     // blob = blob.slice(0, blob.size, "image/jpeg")
-        //     // blob.type = 'image/jpeg'
-        //     console.log(response)
-        //     console.log(blob)
-        //     download(blob)
-        // }
-        //
-        // function download(blob, filename) {
-        //     const url = window.URL.createObjectURL(blob);
-        //     const a = document.createElement('a');
-        //     a.style.display = 'none';
-        //     a.href = url;
-        //     // the filename you want
-        //     a.download = filename;
-        //     document.body.appendChild(a);
-        //     a.click();
-        //     document.body.removeChild(a);
-        //     window.URL.revokeObjectURL(url);
-        // }
+
     </script>
 </th:block>
 </body>

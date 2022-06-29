@@ -1,8 +1,8 @@
 package kr.co.promptech.sbboard.service;
 
-import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.AccountAdapter;
+import kr.co.promptech.sbboard.model.enums.AccountType;
 import kr.co.promptech.sbboard.model.parameter.EmailTokenParameter;
 import kr.co.promptech.sbboard.model.vo.AccountVo;
 import kr.co.promptech.sbboard.repository.AccountRepository;
@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +19,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.AuthenticationFailedException;
 import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;

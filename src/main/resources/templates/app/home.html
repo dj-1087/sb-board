@@ -4,10 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-<!--    <h1 class="text-primary">-->
-<!--        Welcome-->
-<!--        <span th:text="${account?.nickname}" class="text-black"></span>-->
-<!--    </h1>-->
     <div class="card shadow my-5 text-center">
         <div class="card-body">
             <h2 th:text="${menuActive != null ? menuActive.title : 'Home'}"></h2>
@@ -23,7 +19,6 @@
         <div>
             <table th:replace="app/post/_table :: _table"></table>
         </div>
-
     </div>
     <nav th:replace="fragments/pagination :: pagination"></nav>
 </div>

@@ -2,18 +2,15 @@ package kr.co.promptech.sbboard.service;
 
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.Post;
-import kr.co.promptech.sbboard.model.vo.PostVo;
 import kr.co.promptech.sbboard.model.enums.BoardType;
+import kr.co.promptech.sbboard.model.vo.PostVo;
 import kr.co.promptech.sbboard.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service

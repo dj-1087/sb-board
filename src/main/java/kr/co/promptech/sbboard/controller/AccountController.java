@@ -157,7 +157,7 @@ public class AccountController {
     }
 
     @PostMapping("/reset-password")
-    public String resetPassword(@ModelAttribute("accountVo") AccountVo accountVo, Model model) {
+    public String resetPassword(@ModelAttribute("accountVo") AccountVo accountVo) {
 
 
         accountService.resetPassword(accountVo);

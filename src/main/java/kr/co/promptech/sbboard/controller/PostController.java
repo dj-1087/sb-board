@@ -122,14 +122,14 @@ public class PostController {
     }
 
     @PostMapping("/{id}/file")
-    public ResponseEntity<?> uploadFile(@PathVariable("id") Long id, @RequestPart(value = "file", required = true) MultipartFile multipartFile) {
+    public ResponseEntity<?> uploadFile(@PathVariable("id") Long id,
+                                        @RequestPart(value = "file") MultipartFile multipartFile) {
 
         Post post = postService.findById(id);
         UUID uuid = UUID.randomUUID();
 
         File file;
         try {
-
             file = fileService.generateFileInfo(multipartFile, post.getId(), uuid.toString());
         } catch (Exception e) {
             log.info(e.getMessage());
@@ -168,7 +168,7 @@ public class PostController {
     }
 
     @ModelAttribute
-    public void setActive(@CurrentUser Account account, Model model) {
+    private void setActive(@CurrentUser Account account, Model model) {
         model.addAttribute(account);
     }
 }

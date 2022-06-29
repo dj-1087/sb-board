@@ -2,7 +2,6 @@ package kr.co.promptech.sbboard.controller;
 
 import kr.co.promptech.sbboard.model.File;
 import kr.co.promptech.sbboard.service.FileService;
-import kr.co.promptech.sbboard.service.PostService;
 import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,6 @@ import java.util.HashMap;
 public class FileController {
 
     private final FileService fileService;
-    private final PostService postService;
 
     @Value("${spring.servlet.multipart.location}")
     private String UPLOAD_PATH;
@@ -59,7 +57,7 @@ public class FileController {
     }
 
     @PostMapping("/summernote")
-    public ResponseEntity<?> uploadSummernoteFile(@RequestPart(value = "file", required = true) MultipartFile multipartFile) {
+    public ResponseEntity<?> uploadSummernoteFile(@RequestPart(value = "file") MultipartFile multipartFile) {
         File file;
         try {
             file = fileService.generateSummernoteFileInfo(multipartFile);

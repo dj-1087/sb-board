@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
@@ -28,14 +26,14 @@ public class HomeController {
     private final PostService postService;
 
     @GetMapping("/")
-    public String home(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+    public String home(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                        @CurrentUser Account account, Model model) {
         if (account != null) {
             model.addAttribute(account);
         }
 
         Page<Post> posts = postService.findAll(pageable);
-//        List<Post> posts = postService.findAll();
+
         String url = "/";
         Pagination pagination = new Pagination(posts, pageable, url);
 
@@ -46,14 +44,13 @@ public class HomeController {
     }
 
     @GetMapping("/board")
-    public String board(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+    public String board(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                         @RequestParam BoardType type,
                         @CurrentUser Account account, Model model) {
 
         model.addAttribute(account);
 
         Page<Post> posts = postService.findAllByBoardType(type, pageable);
-//        List<Post> posts = postService.findAll();
         String url = "/board";
         Pagination pagination = new Pagination(posts, pageable, url);
         pagination.addQuery("type",type.getKey());
@@ -66,7 +63,7 @@ public class HomeController {
     }
 
     @GetMapping("/search")
-    public String search(@PageableDefault(page = 0, size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                          @RequestParam(value = "keyword") String keyword,
                          @CurrentUser Account account, Model model) {
         model.addAttribute(account);

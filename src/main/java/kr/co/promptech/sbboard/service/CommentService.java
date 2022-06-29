@@ -2,17 +2,13 @@ package kr.co.promptech.sbboard.service;
 
 import kr.co.promptech.sbboard.model.Account;
 import kr.co.promptech.sbboard.model.Comment;
-import kr.co.promptech.sbboard.model.Post;
-import kr.co.promptech.sbboard.model.helper.CurrentUser;
 import kr.co.promptech.sbboard.model.vo.CommentVo;
 import kr.co.promptech.sbboard.repository.CommentRepository;
-import kr.co.promptech.sbboard.repository.PostRepository;
 import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,7 +18,6 @@ import java.util.List;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final PostRepository postRepository;
 
     private final ModelMapper modelMapper;
 
