@@ -44,11 +44,6 @@ public class FileService {
             for (int i = 0; i < files.size(); i++) {
                 MultipartFile multipartFile = files.get(i);
                 File file = this.generateFileInfo(multipartFile, post.getId(), String.valueOf(i));
-                if (file == null) {
-                    //TODO: 추후 제대로 에러처리
-                    log.info("null file");
-                    continue;
-                }
                 this.uploadFile(multipartFile, file);
                 post.addFile(file);
             }
@@ -60,7 +55,7 @@ public class FileService {
     }
 
 
-    public File generateFileInfo(MultipartFile multipartFile, Long postId, String uniqueId) {
+    public File generateFileInfo(MultipartFile multipartFile, Long postId, String uniqueId) throws Exception {
         String path = String.format("%s/%s/", UPLOAD_PATH, postId);
         this.initDir(path);
 
@@ -68,8 +63,7 @@ public class FileService {
         if (originalFilename == null || originalFilename.equals("")) {
             log.info("===========generateFileInfo: no originalFilename===========");
             log.info(originalFilename);
-            // TODO: 추후 제대로 에러처리
-            return null;
+            throw new Exception("no original filename in multipart file");
         }
 
         String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1];
@@ -82,7 +76,7 @@ public class FileService {
                 .ext(extension).build();
     }
 
-    public File generateSummernoteFileInfo(MultipartFile multipartFile) {
+    public File generateSummernoteFileInfo(MultipartFile multipartFile) throws Exception {
         String path = String.format("%s/summernote/", UPLOAD_PATH);
         this.initDir(path);
 
@@ -90,8 +84,7 @@ public class FileService {
         if (originalFilename == null || originalFilename.equals("")) {
             log.info("===========generateSummernoteFileInfo: no originalFilename===========");
             log.info(originalFilename);
-            // TODO: 추후 제대로 에러처리
-            return null;
+            throw new Exception("no original filename in multipart file");
         }
 
         String extension = originalFilename.split("\\.")[originalFilename.split("\\.").length - 1];

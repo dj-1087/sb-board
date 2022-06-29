@@ -18,12 +18,12 @@ public class WebErrorController implements ErrorController {
             int statusCode = Integer.parseInt(status.toString());
 
             if(statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "errors/404";
+                return "errors/page/404";
             }
             else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "errors/500";
+                return "errors/page/500";
             }
         }
-        return "errors/default";
+        return "errors/page/default";
     }
 }

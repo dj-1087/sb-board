@@ -1,9 +1,9 @@
 package kr.co.promptech.sbboard.controller;
 
 import kr.co.promptech.sbboard.model.File;
-import kr.co.promptech.sbboard.model.Post;
 import kr.co.promptech.sbboard.service.FileService;
 import kr.co.promptech.sbboard.service.PostService;
+import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URLConnection;
 import java.util.HashMap;
-import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -61,8 +60,16 @@ public class FileController {
 
     @PostMapping("/summernote")
     public ResponseEntity<?> uploadSummernoteFile(@RequestPart(value = "file", required = true) MultipartFile multipartFile) {
-
-        File file = fileService.generateSummernoteFileInfo(multipartFile);
+        File file;
+        try {
+            file = fileService.generateSummernoteFileInfo(multipartFile);
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            ResultHandler resultHandler = ResultHandler.builder()
+                    .isSuccess(false)
+                    .errorMessage("파일 업로드 중 에러가 발생했습니다. 다시 시도해주세요.").build();
+            return ResponseEntity.badRequest().body(resultHandler);
+        }
         fileService.uploadFile(multipartFile, file);
 
         HashMap<String, String> result = new HashMap<>();
@@ -77,7 +84,6 @@ public class FileController {
         fileService.delete(id);
         return ResponseEntity.ok().build();
     }
-
 
 
 }

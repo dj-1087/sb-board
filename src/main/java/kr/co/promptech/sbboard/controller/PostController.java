@@ -10,6 +10,7 @@ import kr.co.promptech.sbboard.model.vo.PostVo;
 import kr.co.promptech.sbboard.service.FileService;
 import kr.co.promptech.sbboard.service.PostService;
 import kr.co.promptech.sbboard.service.ThumbService;
+import kr.co.promptech.sbboard.util.ResultHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -59,6 +60,8 @@ public class PostController {
         }
         model.addAttribute(post);
 
+        post = postService.increaseViews(post);
+
         PostThumbDto postThumbDto = thumbService.getThumbDtoByPost(post, account);
         model.addAttribute(postThumbDto);
 
@@ -89,8 +92,7 @@ public class PostController {
 
         Post post = postService.findById(id);
         if (post == null) {
-            // TODO: 추후 제대로 처리
-            return "redirect:/";
+            return "/errors/component/404";
         }
         if (!post.isWriter(account)) {
             return "redirect:/";
@@ -125,7 +127,17 @@ public class PostController {
         Post post = postService.findById(id);
         UUID uuid = UUID.randomUUID();
 
-        File file = fileService.generateFileInfo(multipartFile, post.getId(), uuid.toString());
+        File file;
+        try {
+
+            file = fileService.generateFileInfo(multipartFile, post.getId(), uuid.toString());
+        } catch (Exception e) {
+            log.info(e.getMessage());
+            ResultHandler resultHandler = ResultHandler.builder()
+                    .isSuccess(false)
+                    .errorMessage("파일 업로드 중 에러가 발생했습니다. 다시 시도해주세요.").build();
+            return ResponseEntity.badRequest().body(resultHandler);
+        }
         fileService.uploadFile(multipartFile, file);
 
         post.addFile(file);

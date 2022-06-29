@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<body xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/app}">
+<div layout:fragment="content" class="main-content">
+    <div class="container vh-100">
+        <div class="error-code-div">
+            <span class="error-code-span">4</span>
+            <span class="error-code-span">0</span>
+            <span class="error-code-span">4</span>
+        </div>
+        <div class="error-title mb-3">죄송합니다.<br/>
+            요청하신 내용을 찾을 수 없습니다.</div>
+        <div class="error-content mb-3">
+            방문하시려는 페이지의 주소가 잘못 입력되었거나,<br />
+            페이지의 주소가 변경 혹은 삭제되어 요청하신 페이지를 찾을 수 없습니다.<br />
+            <br />
+            입력하신 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.<br />
+            <br />
+            감사합니다.<br />
+        </div>
+        <div class="d-flex justify-content-center">
+            <a th:href="@{/}" class="btn btn-outline-secondary px-3">홈으로 이동</a>
+        </div>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script type="application/javascript">
+        document.addEventListener("DOMContentLoaded", () => {
+        })
+    </script>
+</th:block>
+</body>
