@@ -37,6 +37,8 @@ public class Post extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private BoardType boardType;
 
+    private int views;
+
     @Builder.Default
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<File> fileSet = new HashSet<>();

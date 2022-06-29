@@ -67,4 +67,10 @@ public class PostService {
     public void delete(Long id) {
         postRepository.deleteById(id);
     }
+
+    public Post increaseViews(Post post) {
+        int views = post.getViews() + 1;
+        post.setViews(views);
+        return postRepository.save(post);
+    }
 }

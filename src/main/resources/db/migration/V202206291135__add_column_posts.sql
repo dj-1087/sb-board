@@ -1,0 +1,1 @@
+ALTER TABLE posts ADD views INTEGER NOT NULL DEFAULT 0 AFTER board_type;
