@@ -54,8 +54,9 @@ public class HomeController {
 
         Page<Post> posts = postService.findAllByBoardType(type, pageable);
 //        List<Post> posts = postService.findAll();
-        String url = "/";
+        String url = "/board";
         Pagination pagination = new Pagination(posts, pageable, url);
+        pagination.addQuery("type",type.getKey());
 
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("totalCount", posts.getTotalElements());

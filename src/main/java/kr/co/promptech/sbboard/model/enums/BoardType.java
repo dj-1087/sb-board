@@ -6,10 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum BoardType {
-    NOTICE("공지사항"),
-    QNA("Q&A"),
-    FREE("자유게시판");
+    NOTICE("공지사항", "NOTICE"),
+    QNA("Q&A", "QNA"),
+    FREE("자유게시판", "FREE");
 
-    private final String title;
+    private final String title, key;
 
 }

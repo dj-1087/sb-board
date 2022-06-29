@@ -34,4 +34,8 @@ public class Pagination {
         this.end = Math.min(this.begin + 2*DEFAULT_GUTTER, page.getTotalPages());
         this.url = url;
     }
+
+    public void addQuery(String key, String value) {
+        this.query += String.format("%s=%s&", key, value);
+    }
 }
