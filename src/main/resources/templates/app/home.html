@@ -4,19 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/app}">
 <div layout:fragment="content" class="main-content">
-    <h1 class="text-primary">
-        Welcome
-        <span th:text="${account?.nickname}" class="text-black"></span>
-    </h1>
-    <div th:if="${account != null && !account.emailConfirmed}"
-         class="alert alert-warning mb-5" role="alert">
-        아직 이메일 인증을 완료하지 않은 계정입니다.<br/>
-        가입하신 메일계정으로 인증을 완료해주시길 바랍니다.<br/>
-        <small class="text-danger">※주의: 이메일 인증을 하지 않을 경우, 추후 비밀번호 재설정 시 불이익이 발생할 수 있습니다.</small>
-        <button id="resend-confirm-mail-btn" class="btn btn-sm btn-secondary float-end">인증메일 재전송</button>
+<!--    <h1 class="text-primary">-->
+<!--        Welcome-->
+<!--        <span th:text="${account?.nickname}" class="text-black"></span>-->
+<!--    </h1>-->
+    <div class="card shadow my-5 text-center">
+        <div class="card-body">
+            <h2 th:text="${menuActive != null ? menuActive.title : 'Home'}"></h2>
+        </div>
     </div>
 
-    <div class="container text-center">
+    <div class="text-center">
         <div class="row text-end mb-3">
             <div class="col text-end">
                 <a th:href="@{/posts}" class="btn btn-sm btn-outline-success">게시물 작성</a>
