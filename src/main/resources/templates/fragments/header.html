@@ -13,14 +13,21 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a th:href="@{/}" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a th:href="@{/board(type=${boardType.NOTICE})}" class="nav-link px-2 text-white">공지사항</a></li>
-                <li><a th:href="@{/board(type=${boardType.QNA})}" class="nav-link px-2 text-white">Q&A</a></li>
-                <li><a th:href="@{/board(type=${boardType.FREE})}" class="nav-link px-2 text-white">자유게시판</a></li>
+                <li><a th:href="@{/board(type=${boardType.NOTICE})}"
+                       th:classappend="${menuActive == boardType.NOTICE ? 'active' : ''}"
+                       class="nav-link px-2 text-white menu">공지사항</a></li>
+                <li><a th:href="@{/board(type=${boardType.QNA})}"
+                       th:classappend="${menuActive == boardType.QNA ? 'active' : ''}"
+                       class="nav-link px-2 text-white menu">Q&A</a></li>
+                <li><a th:href="@{/board(type=${boardType.FREE})}"
+                       th:classappend="${menuActive == boardType.FREE ? 'active' : ''}"
+                       class="nav-link px-2 text-white menu">자유게시판</a></li>
             </ul>
 
             <form id="search-form" th:action="@{/search}" method="GET"
                   class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
-                <input type="search" name="keyword" class="form-control form-control-dark me-2" placeholder="게시물 검색..." aria-label="Search">
+                <input type="search" name="keyword" class="form-control form-control-dark me-2" placeholder="게시물 검색..."
+                       aria-label="Search">
                 <button type="submit" class="btn btn-warning text-nowrap">검색</button>
             </form>
 

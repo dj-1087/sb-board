@@ -4,6 +4,33 @@ $body-bg: #E9ECEFFF;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
+.menu {
+  //&:hover {
+  //  background: #9E9E9E;
+  //}
+  &:hover {
+    cursor: pointer;
+    color: $primary !important;
+    transition: color 0.5s;
+  }
+
+  &.active {
+    color: $primary !important;
+  }
+}
+
+.avatar-lg {
+  font-size: 2rem;
+}
+
+#profile-avatar {
+  &:hover {
+    cursor: pointer;
+    color: $primary !important;
+    transition: color 0.5s;
+  }
+}
+
 .loading-overlay {
   display: none;
   background: rgba(42, 42, 42, 0.5);

@@ -61,6 +61,7 @@ public class HomeController {
         model.addAttribute("posts", posts.getContent());
         model.addAttribute("totalCount", posts.getTotalElements());
         model.addAttribute("pagination", pagination);
+        model.addAttribute("menuActive", type);
         return "app/home";
     }
 
