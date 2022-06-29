@@ -26,7 +26,7 @@
 
             <form id="search-form" th:action="@{/search}" method="GET"
                   class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
-                <input type="search" name="keyword" class="form-control form-control-dark me-2" placeholder="게시물 검색..."
+                <input type="search" name="keyword" class="form-control form-control-dark me-2" placeholder="제목으로 검색..."
                        aria-label="Search">
                 <button type="submit" class="btn btn-warning text-nowrap">검색</button>
             </form>
@@ -36,12 +36,50 @@
                     <a th:href="@{/auth/login}" class="btn btn-outline-light me-2">로그인</a>
                 </div>
             </th:block>
-            <th:block sec:authorize="isAuthenticated()" >
+            <th:block sec:authorize="isAuthenticated()">
                 <div class="text-end">
-                    <form action="#" th:action="@{/logout}" method="POST" class="inline">
-                        <button type="submit" class="btn btn-outline-light me-2">로그아웃</button>
-                    </form>
+                    <div id="profile-avatar" data-bs-toggle="dropdown" aria-expanded="false"
+                         class="d-flex align-items-center">
+                        <i class="bi bi-person-circle avatar-lg"></i>&nbsp;
+                        <span th:text="${account.nickname}+' 님'" class="text-nowrap h5 m-0">nickname</span>
+                    </div>
+<!--                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile-avatar">-->
+<!--                        <li>-->
+<!--                            <form action="#" th:action="@{/logout}" method="POST" class="inline">-->
+<!--                                <button type="submit" class="btn btn-outline-light me-2 dropdown-item">로그아웃</button>-->
+<!--                            </form>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                    <ul aria-labelledby="profile-avatar"
+                        class="dropdown-menu dropdown-menu-start dropdown-menu-dark mx-0 border-0 shadow w-220px mt-3">
+                        <li>
+                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
+                                <i class="bi bi-person-lines-fill"></i>
+                                마이페이지
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
+                                <i class="bi bi-bell-fill"></i>
+                                알림
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form action="#" th:action="@{/logout}" method="POST" class="inline">
+                                <button type="submit" class="dropdown-item d-flex gap-2 align-items-center">
+                                    <i class="bi bi-box-arrow-right"></i>
+                                    로그아웃
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
+<!--                                <div class="text-end">-->
+<!--                                    <form action="#" th:action="@{/logout}" method="POST" class="inline">-->
+<!--                                        <button type="submit" class="btn btn-outline-light me-2">로그아웃</button>-->
+<!--                                    </form>-->
+<!--                                </div>-->
             </th:block>
         </div>
     </div>
