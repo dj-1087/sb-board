@@ -25,3 +25,26 @@ $body-bg: #E9ECEFFF;
     height: 3rem;
   }
 }
+
+
+ .error-code-div {
+   font-size: 10rem;
+   font-weight: 900;
+   letter-spacing: -1rem;
+   color: #e91b23;
+   text-align: center;
+
+   .error-code-span {
+     text-shadow: -8px 0px 0px #000;
+   }
+ }
+
+.error-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+.error-content {
+  text-align: center;
+}
+
