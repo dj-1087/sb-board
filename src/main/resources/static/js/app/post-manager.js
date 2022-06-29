@@ -185,12 +185,8 @@ PostManager.prototype.removePost = async function (id) {
 };
 
 PostManager.prototype.uploadSummernoteImage = async function (file, el) {
+    const self = this;
 
-    // TODO 추후 manager 객체로 변환시 수정 필요
-    const token = document.querySelector('meta[name="_csrf"]').content;
-    const header = document.querySelector('meta[name="_csrf_header"]').content;
-
-    // const postId = document.getElementById('post-id').value;
     const form_data = new FormData();
     form_data.append('file', file);
 
@@ -198,8 +194,7 @@ PostManager.prototype.uploadSummernoteImage = async function (file, el) {
         method: "POST",
         mode: 'cors',
         headers: {
-            [header]: token,
-            // 'Content-Type': 'multipart/form-data',
+            [self.header]: self.token,
         },
         body: form_data,
     });
