@@ -25,26 +25,30 @@
             </ul>
 
             <form id="search-form" th:action="@{/search}" method="GET"
-                  class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3 d-flex">
-                <input type="search" name="keyword" class="form-control form-control-dark me-2" placeholder="제목으로 검색..."
+                  class="col-12 col-lg-auto mb-3 mb-lg-0 d-flex align-items-center">
+                <input type="search" name="keyword" class="form-control form-control-dark rounded-pill h-75 w-75" placeholder="제목으로 검색..."
                        aria-label="Search">
-                <button type="submit" class="btn btn-warning text-nowrap">검색</button>
+                <button type="submit" class="btn"><i class="bi bi-search icon-lg text-white"></i></button>
             </form>
+
+<!--            <a th:href="@{/}"><i class="bi bi-search icon-lg text-white me-lg-3"></i></a>-->
 
             <th:block sec:authorize="isAnonymous()">
                 <div class="text-end">
-                    <a th:href="@{/auth/login}" class="btn btn-outline-light me-2">로그인</a>
+                    <a th:href="@{/auth/login}" class="btn btn-outline-light rounded-pill me-2">로그인</a>
                 </div>
             </th:block>
             <th:block sec:authorize="isAuthenticated()">
+                <a th:href="@{/posts}" class="btn btn-outline-light rounded-pill me-lg-3">새 글 작성</a>
                 <div class="text-end">
                     <div id="profile-avatar" data-bs-toggle="dropdown" aria-expanded="false"
                          class="d-flex align-items-center">
-                        <i class="bi bi-person-circle avatar-lg"></i>&nbsp;
-                        <span th:text="${account.nickname}+' 님'" class="text-nowrap h5 m-0">nickname</span>
+                        <i class="bi bi-person-circle icon-xlg"></i>&nbsp;&nbsp;
+                        <span class="dropdown-toggle"></span>&nbsp;
+<!--                        <span th:text="${account.nickname}+' 님'" class="text-nowrap h5 m-0">nickname</span>-->
                     </div>
                     <ul aria-labelledby="profile-avatar"
-                        class="dropdown-menu dropdown-menu-start dropdown-menu-dark mx-0 border-0 shadow w-220px mt-3">
+                        class="dropdown-menu dropdown-menu-end dropdown-menu-dark mx-0 border-0 shadow w-220px mt-3">
                         <li>
                             <a class="dropdown-item d-flex gap-2 align-items-center" href="#">
                                 <i class="bi bi-person-lines-fill"></i>
